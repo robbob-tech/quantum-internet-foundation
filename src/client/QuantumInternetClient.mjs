@@ -20,7 +20,7 @@ export class QuantumInternetClient {
     
     if (!this.apiKey && !config.skipAuth) {
       console.warn('⚠️  No API key provided. Set QUANTUM_INTERNET_API_KEY or pass apiKey in config.');
-      console.warn('   Get your API key at: https://quantuminternet.dev/api');
+      console.warn('   Get your API key: operations@sparse-supernova.com');
     }
     
     // Initialize feature clients

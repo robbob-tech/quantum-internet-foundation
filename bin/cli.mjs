@@ -34,7 +34,7 @@ Examples:
   qi qkd bb84 --qubits 100
   qi balance 0x1234567890abcdef1234567890abcdef12345678
   
-Get your API key: https://quantuminternet.dev/api
+Get your API key: operations@sparse-supernova.com
 `);
 }
 
@@ -57,7 +57,7 @@ async function main() {
   if (!apiKey) {
     console.error('❌ Error: No API key provided');
     console.error('Set QUANTUM_INTERNET_API_KEY or use --api-key <key>');
-    console.error('Get your API key at: https://quantuminternet.dev/api');
+    console.error('Get your API key: operations@sparse-supernova.com');
     process.exit(1);
   }
   

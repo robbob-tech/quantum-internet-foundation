@@ -71,7 +71,7 @@ const client = new QuantumInternetClient({
 
 API keys follow the format: `sk_...` for standard keys, or `pk_...` for public keys (read-only).
 
-**Get your API key:** https://quantuminternet.dev/api
+**Get your API key:** operations@sparse-supernova.com
 
 ---
 
@@ -1792,12 +1792,12 @@ async function p2pNetwork() {
 
 ## Additional Resources
 
-- **GitHub Repository:** https://github.com/robbob-tech/quantum-internet-foundation
+- **GitHub Repository:** https://github.com/sparse-supernova
 - **Backend API Specification:** [BACKEND_API.md](./BACKEND_API.md)
 - **Examples Directory:** [../examples/](../examples/)
 - **TypeScript Types:** [../src/types/index.d.ts](../src/types/index.d.ts)
-- **Website:** https://quantuminternet.dev
-- **Support:** support@quantuminternet.dev
+- **Website:** https://sparse-supernova.com
+- **Support:** operations@sparse-supernova.com
 
 ---
 

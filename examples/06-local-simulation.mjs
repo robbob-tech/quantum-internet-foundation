@@ -122,4 +122,4 @@ console.log('For production features (real quantum hardware, optimized protocols
 console.log('Q-HAL, Quantum Ratchet, SSC, P2P), use the API:\n');
 console.log('  export QUANTUM_INTERNET_API_KEY="your-key"');
 console.log('  node examples/01-quantum-bridge.mjs\n');
-console.log('Get your API key at: https://quantuminternet.dev/api');
+console.log('Get your API key: operations@sparse-supernova.com');

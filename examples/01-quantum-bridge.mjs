@@ -15,7 +15,7 @@ async function quantumBridgeDemo() {
   
   if (!process.env.QUANTUM_INTERNET_API_KEY) {
     console.log('⚠️  Set QUANTUM_INTERNET_API_KEY environment variable');
-    console.log('   Get your API key at: https://quantuminternet.dev/api\n');
+    console.log('   Get your API key: operations@sparse-supernova.com\n');
     return;
   }
   

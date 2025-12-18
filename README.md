@@ -52,7 +52,7 @@ This repository contains **only the client library** for accessing our quantum i
 
 This project is published under an open-source license for transparency and community access. The maintainers make **no commitment** that the public client code reflects, approximates, or reveals any functionality of the private quantum internet backend systems.
 
-**For API access and production use:** https://quantuminternet.dev/api
+**For API access and production use:** operations@sparse-supernova.com
 
 ---
 
@@ -64,7 +64,7 @@ npm install @quantum-internet/foundation
 
 **Requirements:**
 - Node.js >= 20.0.0
-- API key from https://quantuminternet.dev/api
+- API key from operations@sparse-supernova.com
 
 ---
 
@@ -314,7 +314,7 @@ npm run example:local
 - 24/7 support
 - SLA guarantees
 
-**Get your API key:** https://quantuminternet.dev/pricing
+**Get your API key:** operations@sparse-supernova.com
 
 ---
 
@@ -389,13 +389,12 @@ Apache 2.0 - See [LICENSE](./LICENSE) for details.
 
 ## 🔗 Links
 
-- **Website:** https://quantuminternet.dev
+- **Website:** https://sparse-supernova.com
 - **API Documentation:** https://quantuminternet.dev/docs
-- **Get API Key:** https://quantuminternet.dev/api
-- **GitHub:** https://github.com/robbob-tech/quantum-internet-foundation
+- **Get API Key:** operations@sparse-supernova.com
+- **GitHub:** https://github.com/sparse-supernova
 - **npm:** https://www.npmjs.com/package/@quantum-internet/foundation
-- **Discord:** https://discord.gg/quantum-internet
-- **Support:** support@quantuminternet.dev
+- **Support:** operations@sparse-supernova.com
 
 ---
 
@@ -429,9 +428,7 @@ For production use cases, research, or real quantum hardware access, use the API
 
 ## 💬 Support
 
-- **GitHub Issues:** https://github.com/robbob-tech/quantum-internet-foundation/issues
-- **Email:** support@quantuminternet.dev
-- **Discord:** https://discord.gg/quantum-internet
+- **Email:** operations@sparse-supernova.com
 - **Documentation:** https://quantuminternet.dev/docs
 
 ---
@@ -451,4 +448,4 @@ This client library connects to production quantum infrastructure powered by:
 
 **Built with ❤️ by the Quantum Internet Foundation team**
 
-Get started today: https://quantuminternet.dev
+Get started today: https://sparse-supernova.com
