@@ -273,6 +273,7 @@ See the `examples/` directory for complete working examples:
 - `04-ssc-economics.mjs` - Token minting and carbon credit system
 - `05-full-stack.mjs` - Complete integration of all features
 - `06-local-simulation.mjs` - Educational simulations (no API needed)
+- `07-complex-quantum-scenario.mjs` - **Complex quantum-secured communication scenario** (14-step workflow)
 
 ### Running Examples
 
@@ -286,6 +287,7 @@ npm run example:protocols
 npm run example:ratchet
 npm run example:ssc
 npm run example:full
+npm run example:complex
 
 # Local simulation (no API key needed)
 npm run example:local

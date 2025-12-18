@@ -1,13 +1,38 @@
 #!/usr/bin/env node
-// test-complex-quantum.mjs
-// Complex quantum problem test: Full quantum-secured communication setup
+/**
+ * Example 07: Complex Quantum-Secured Communication Scenario
+ * 
+ * This example demonstrates a complete quantum-secured communication setup:
+ * 1. Quantum entanglement verification via Bell pairs and CHSH test
+ * 2. Quantum Key Distribution (BB84) for secure key generation
+ * 3. Quantum Ratchet encryption for end-to-end security
+ * 4. P2P quantum network with QKD-enabled messaging
+ * 5. SSC token minting for energy savings tracking
+ * 
+ * This represents a real-world quantum internet use case where multiple
+ * quantum technologies work together to provide secure communication.
+ * 
+ * Usage:
+ *   export QUANTUM_INTERNET_API_KEY="your-api-key"
+ *   node examples/07-complex-quantum-scenario.mjs
+ * 
+ * Or with npm:
+ *   npm run example:complex
+ */
 
-import { QuantumInternetClient } from './src/index.mjs';
+import { QuantumInternetClient } from '../src/index.mjs';
 
-const API_KEY = process.env.QUANTUM_INTERNET_API_KEY || 'test-key';
-const API_URL = 'https://quantum-internet-api.sparsesupernova.workers.dev/v1';
+// Configuration
+const API_KEY = process.env.QUANTUM_INTERNET_API_KEY;
+const API_URL = process.env.QUANTUM_INTERNET_API_URL || 'https://quantum-internet-api.sparsesupernova.workers.dev/v1';
 
-console.log('🔬 Complex Quantum Problem Test: Quantum-Secured Communication Setup\n');
+if (!API_KEY) {
+  console.error('❌ Error: QUANTUM_INTERNET_API_KEY environment variable not set');
+  console.error('   Get your API key: operations@sparse-supernova.com');
+  process.exit(1);
+}
+
+console.log('🔬 Complex Quantum Problem: Quantum-Secured Communication Setup\n');
 console.log('=' .repeat(70));
 console.log('Scenario: Establish end-to-end quantum-secured communication');
 console.log('Steps:');
@@ -21,13 +46,14 @@ console.log('  7. Send quantum-secured messages via P2P network');
 console.log('  8. Mint SSC tokens for energy savings');
 console.log('=' .repeat(70) + '\n');
 
+// Initialize client
 const client = new QuantumInternetClient({
   apiKey: API_KEY,
   baseUrl: API_URL,
   debug: false
 });
 
-async function runComplexTest() {
+async function runComplexQuantumScenario() {
   const results = {
     steps: [],
     success: true,
@@ -311,7 +337,7 @@ async function runComplexTest() {
 
     // Summary
     console.log('\n' + '=' .repeat(70));
-    console.log('📋 Test Summary');
+    console.log('📋 Scenario Summary');
     console.log('=' .repeat(70));
     console.log(`✅ Total Steps: ${results.steps.length}`);
     console.log(`✅ Successful: ${results.steps.filter(s => s.success).length}`);
@@ -335,15 +361,17 @@ async function runComplexTest() {
 
   } catch (error) {
     console.error('\n❌ Fatal Error:', error.message);
-    console.error(error.stack);
+    if (error.stack) {
+      console.error(error.stack);
+    }
     results.success = false;
     results.errors.push(error.message);
     return results;
   }
 }
 
-// Run the test
-runComplexTest()
+// Run the scenario
+runComplexQuantumScenario()
   .then(results => {
     process.exit(results.success ? 0 : 1);
   })

@@ -24,7 +24,8 @@
     "example:ratchet": "node examples/03-quantum-ratchet.mjs",
     "example:ssc": "node examples/04-ssc-economics.mjs",
     "example:full": "node examples/05-full-stack.mjs",
-    "example:local": "node examples/06-local-simulation.mjs"
+    "example:local": "node examples/06-local-simulation.mjs",
+    "example:complex": "node examples/07-complex-quantum-scenario.mjs"
   },
   "keywords": [
     "quantum",
