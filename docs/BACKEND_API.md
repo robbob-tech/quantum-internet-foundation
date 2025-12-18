@@ -2,7 +2,9 @@
 
 This document specifies the API endpoints that YOUR backend must implement to support the Quantum Internet Foundation client library.
 
-**Base URL:** `https://api.quantuminternet.dev/v1`
+**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v1`
+
+**Note:** This API is deployed on Cloudflare Workers. You can use a custom domain by configuring it in Cloudflare.
 
 **Authentication:** All requests require `X-API-Key` header.
 

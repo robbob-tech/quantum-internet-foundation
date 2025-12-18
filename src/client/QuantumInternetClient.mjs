@@ -14,7 +14,7 @@ import { P2PClient } from './network/P2PClient.mjs';
 export class QuantumInternetClient {
   constructor(config = {}) {
     this.apiKey = config.apiKey || process.env.QUANTUM_INTERNET_API_KEY;
-    this.baseUrl = config.baseUrl || 'https://api.quantuminternet.dev/v1';
+    this.baseUrl = config.baseUrl || 'https://quantum-internet-api.sparsesupernova.workers.dev/v1';
     this.timeout = config.timeout || 30000;
     this.debug = config.debug || false;
     

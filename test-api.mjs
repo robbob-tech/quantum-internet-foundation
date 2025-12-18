@@ -4,7 +4,7 @@
 
 import { QuantumInternetClient } from './src/index.mjs';
 
-const API_BASE_URL = 'https://api.quantuminternet.dev/v1';
+const API_BASE_URL = 'https://quantum-internet-api.sparsesupernova.workers.dev/v1';
 const TEST_API_KEY = process.env.QUANTUM_INTERNET_API_KEY || 'test-key';
 
 console.log('🧪 Quantum Internet Foundation API Test Suite\n');

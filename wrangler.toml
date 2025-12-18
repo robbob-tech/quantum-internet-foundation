@@ -1,0 +1,10 @@
+name = "quantum-internet-api"
+main = "workers/quantum-api-worker.mjs"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "quantum-internet-api"
+
+[env.staging]
+name = "quantum-internet-api-staging"
+

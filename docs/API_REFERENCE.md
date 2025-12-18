@@ -3,7 +3,7 @@
 Complete API documentation for the Quantum Internet Foundation client library.
 
 **Version:** 1.0.0  
-**Base URL:** `https://api.quantuminternet.dev/v1`
+**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v1`
 
 ---
 
@@ -82,7 +82,7 @@ API keys follow the format: `sk_...` for standard keys, or `pk_...` for public k
 ```typescript
 interface QuantumInternetClientConfig {
   apiKey?: string;           // API key (or use QUANTUM_INTERNET_API_KEY env var)
-  baseUrl?: string;          // Base API URL (default: https://api.quantuminternet.dev/v1)
+  baseUrl?: string;          // Base API URL (default: https://quantum-internet-api.sparsesupernova.workers.dev/v1)
   timeout?: number;          // Request timeout in ms (default: 30000)
   debug?: boolean;           // Enable debug logging (default: false)
   skipAuth?: boolean;        // Skip authentication (for testing only)
@@ -94,7 +94,7 @@ interface QuantumInternetClientConfig {
 ```javascript
 const client = new QuantumInternetClient({
   apiKey: 'sk_...',
-  baseUrl: 'https://api.quantuminternet.dev/v1',
+    baseUrl: 'https://quantum-internet-api.sparsesupernova.workers.dev/v1',
   timeout: 60000,  // 60 seconds
   debug: true      // Log all requests/responses
 });
