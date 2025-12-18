@@ -69,9 +69,26 @@ const client = new QuantumInternetClient({
 
 ### API Key Format
 
-API keys follow the format: `sk_...` for standard keys, or `pk_...` for public keys (read-only).
+API keys are prefixed to indicate their tier:
+
+- **Free Tier:** Keys starting with `free_` (e.g., `free_abc123...`)
+  - 100 requests/day
+  - Simulation mode only
+  - All protocols available
+  
+- **Pro Tier:** Keys starting with `pro_` (e.g., `pro_xyz789...`)
+  - 10,000 requests/day
+  - Real hardware access
+  - $99/month
+  
+- **Enterprise Tier:** Keys starting with `ent_` (e.g., `ent_enterprise123...`)
+  - Unlimited requests
+  - Real hardware access
+  - Custom pricing
 
 **Get your API key:** operations@sparse-supernova.com
+
+See [API Tiers Documentation](API_TIERS.md) for complete tier details.
 
 ---
 
@@ -106,6 +123,10 @@ const client = new QuantumInternetClient({
 
 The Quantum Bridge provides access to real IBM Quantum hardware and quantum operations.
 
+**Tier Restrictions:**
+- **Free Tier:** Simulation mode only (`useRealHardware: false` required)
+- **Pro/Enterprise:** Full hardware access available
+
 ### `client.bridge.createBellPair(options)`
 
 Create an entangled Bell pair on quantum hardware.
@@ -114,7 +135,7 @@ Create an entangled Bell pair on quantum hardware.
 ```typescript
 interface BellPairOptions {
   backend?: string;          // Quantum backend name (default: 'ibm_brisbane')
-  useRealHardware?: boolean; // Use real hardware vs simulator (default: false)
+  useRealHardware?: boolean; // Use real hardware vs simulator (default: false). Free tier requires false.
   fidelity?: number;         // Target fidelity 0- (default: 0.9)
   shots?: number;           // Number of measurement shots (default: 0)
 }
@@ -1013,7 +1034,7 @@ Mint SSC tokens based on energy savings and carbon reduction.
 interface SSCMintOptions {
   amount: number;                 // Amount of SSC to mint (required)
   energySaved: number;            // Energy saved in kWh (required)
-  carbonReduced: number;          // Carbon reduced in kg COÇÇ (required)
+  carbonReduced: number;          // Carbon reduced in kg COÔøΩÔøΩ (required)
   operationType: string;          // Operation type: 'quantum_entanglement' | 'qkd' | 'quantum_computation' (required)
   recipient?: string;             // Recipient address (optional, defaults to API key owner)
   metadata?: Record<string, any>; // Additional metadata
@@ -1036,7 +1057,7 @@ interface SSCMintResult {
 const minted = await client.ssc.mint({
   amount: 00,
   energySaved: .,      // kWh
-  carbonReduced: 0.7,    // kg COÇÇ
+  carbonReduced: 0.7,    // kg COÔøΩÔøΩ
   operationType: 'quantum_entanglement'
 });
 
@@ -1058,7 +1079,7 @@ Get SSC balance for an address.
 {
   address: string;
   ssc: number;                    // SSC token balance
-  carbon_credits: number;         // Carbon credits (kg COÇÇ)
+  carbon_credits: number;         // Carbon credits (kg COÔøΩÔøΩ)
   energy_saved: number;           // Total energy saved (kWh)
   staked: number;                 // Staked SSC tokens
   available: number;              // Available SSC tokens
@@ -1069,7 +1090,7 @@ Get SSC balance for an address.
 ```javascript
 const balance = await client.ssc.getBalance('wallet_address_here');
 console.log(`Balance: ${balance.ssc} SSC`);
-console.log(`Carbon Credits: ${balance.carbon_credits} kg COÇÇ`);
+console.log(`Carbon Credits: ${balance.carbon_credits} kg COÔøΩÔøΩ`);
 ```
 
 ---
@@ -1156,7 +1177,7 @@ Get carbon credit statistics.
 ```typescript
 {
   address?: string;               // Present if address provided
-  carbon_credits: number;         // Total carbon credits (kg COÇÇ)
+  carbon_credits: number;         // Total carbon credits (kg COÔøΩÔøΩ)
   energy_saved: number;           // Total energy saved (kWh)
   operations_count: number;       // Number of operations
   equivalent_trees: number;       // Equivalent trees planted
@@ -1223,7 +1244,7 @@ Get SSC system-wide statistics.
 {
   total_supply: number;           // Total SSC supply
   circulating_supply: number;     // Circulating supply
-  total_carbon_credits: number;   // Total carbon credits (kg COÇÇ)
+  total_carbon_credits: number;   // Total carbon credits (kg COÔøΩÔøΩ)
   total_energy_saved: number;      // Total energy saved (kWh)
   active_addresses: number;       // Number of active addresses
   transactions_count: number;     // Total transactions
@@ -1542,7 +1563,8 @@ class QuantumInternetError extends Error {
 | `RATE_LIMIT_EXCEEDED` | Too many requests | 9 |
 | `BACKEND_UNAVAILABLE` | Quantum backend offline | 0 |
 | `INVALID_PARAMETERS` | Invalid request parameters | 00 |
-| `HARDWARE_ACCESS_DENIED` | Real hardware not available for your plan | 0 |
+| `HARDWARE_ACCESS_DENIED` | Real hardware not available for your tier (Free tier restricted to simulation) | 403 |
+| `RATE_LIMIT_EXCEEDED` | Rate limit exceeded for your tier | 429 |
 | `SESSION_NOT_FOUND` | Session identifier not found | 0 |
 | `OPERATION_FAILED` | Quantum operation failed | 00 |
 | `NETWORK_ERROR` | Network connection error | - |
@@ -1577,20 +1599,21 @@ Rate limits are enforced per API key and vary by subscription tier.
 
 ### Rate Limit Tiers
 
-| Tier | Requests/Day | Requests/Hour | Requests/Minute |
-|------|--------------|---------------|----------------|
-| **Free** | 00 | 0 |  |
-| **Pro** | 0,000 | ,000 | 00 |
-| **Enterprise** | Unlimited | Unlimited | Unlimited |
+| Tier | Requests/Day | Requests/Hour | Requests/Minute | Real Hardware |
+|------|--------------|---------------|-----------------|---------------|
+| **Free** | 100 | 10 | 2 | ‚ùå Simulation only |
+| **Pro** | 10,000 | 1,000 | 100 | ‚úÖ Yes |
+| **Enterprise** | Unlimited | Unlimited | Unlimited | ‚úÖ Yes |
 
 ### Rate Limit Headers
 
 All API responses include rate limit information in headers:
 
 ```
-X-RateLimit-Limit: 0000
-X-RateLimit-Remaining: 990
-X-RateLimit-Reset: 0000000
+X-API-Tier: Free
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1734567890000
 ```
 
 ### Handling Rate Limits
@@ -1737,7 +1760,7 @@ async function mintTokens() {
 
   // Calculate energy savings (example)
   const energySaved = 0.; // kWh
-  const carbonReduced = 0.; // kg COÇÇ
+  const carbonReduced = 0.; // kg COÔøΩÔøΩ
 
   // Mint SSC tokens
   const minted = await client.ssc.mint({
@@ -1753,7 +1776,7 @@ async function mintTokens() {
   // Check balance
   const balance = await client.ssc.getBalance('your_address');
   console.log(`Total Balance: ${balance.ssc} SSC`);
-  console.log(`Carbon Credits: ${balance.carbon_credits} kg COÇÇ`);
+  console.log(`Carbon Credits: ${balance.carbon_credits} kg COÔøΩÔøΩ`);
 }
 ```
 

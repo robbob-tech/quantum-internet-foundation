@@ -401,9 +401,9 @@ Apache 2.0 - See [LICENSE](./LICENSE) for details.
 ## Links
 
 - **Website:** https://sparse-supernova.com
-- **API Documentation:** https://sparse-supernova.com/docs
+- **API Documentation:** [docs/API_REFERENCE.md](docs/API_REFERENCE.md) | [docs/BACKEND_API.md](docs/BACKEND_API.md) | [docs/API_TIERS.md](docs/API_TIERS.md)
 - **Get API Key:** operations@sparse-supernova.com
-- **GitHub:** https://github.com/sparse-supernova
+- **GitHub:** https://github.com/sparse-supernova/quantum-internet-foundation
 - **npm:** https://www.npmjs.com/package/@quantum-internet/foundation
 - **Support:** operations@sparse-supernova.com
 
@@ -455,7 +455,7 @@ For production use cases, research, or real quantum hardware access, use the API
 ## Support
 
 - **Email:** operations@sparse-supernova.com
-- **Documentation:** https://sparse-supernova.com/docs
+- **Documentation:** See [docs/](docs/) folder for complete API documentation
 
 ---
 

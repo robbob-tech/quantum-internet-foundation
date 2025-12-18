@@ -2,11 +2,36 @@
 
 This document specifies the API endpoints that YOUR backend must implement to support the Quantum Internet Foundation client library.
 
-**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v`
+**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v1`
 
 **Note:** This API is deployed on Cloudflare Workers. You can use a custom domain by configuring it in Cloudflare.
 
 **Authentication:** All requests require `X-API-Key` header.
+
+**Error Responses:**
+
+All endpoints may return the following errors:
+
+| Status | Code | Description |
+|--------|------|-------------|
+| 401 | `INVALID_API_KEY` | Missing or invalid API key |
+| 403 | `HARDWARE_ACCESS_DENIED` | Free tier attempted to use real hardware |
+| 429 | `RATE_LIMIT_EXCEEDED` | Rate limit exceeded for tier |
+| 400 | `INVALID_PARAMETERS` | Invalid request parameters |
+| 404 | `NOT_FOUND` | Endpoint not found |
+
+**API Tiers:**
+- **Free Tier** (`free_*` keys): 100 requests/day, simulation mode only
+- **Pro Tier** (`pro_*` keys): 10,000 requests/day, real hardware access
+- **Enterprise Tier** (`ent_*` keys): Unlimited, real hardware access
+
+**Rate Limit Headers:** All responses include:
+- `X-API-Tier`: Tier name (Free, Pro, Enterprise)
+- `X-RateLimit-Limit`: Daily request limit
+- `X-RateLimit-Remaining`: Remaining requests today
+- `X-RateLimit-Reset`: Timestamp when limit resets
+
+See [API_TIERS.md](API_TIERS.md) for complete tier documentation.
 
 ---
 
@@ -19,7 +44,7 @@ Health check endpoint.
 ```json
 {
   "status": "ok",
-  "timestamp": "0--8T0:0:00Z"
+  "timestamp": "2025-12-18T10:30:00Z"
 }
 ```
 
@@ -30,9 +55,9 @@ API status and version information.
 ```json
 {
   "status": "operational",
-  "version": ".0.0",
-  "uptime": "7h m",
-  "backends_connected": ,
+  "version": "1.0.0",
+  "uptime": "72h 15m",
+  "backends_connected": 5,
   "real_hardware_available": true
 }
 ```
@@ -44,30 +69,51 @@ API status and version information.
 ### POST /quantum/bridge/bell-pair
 Create an entangled Bell pair.
 
+**Tier Restrictions:**
+- Free tier: `use_real_hardware: true` will return `403 HARDWARE_ACCESS_DENIED`
+- Pro/Enterprise: Full hardware access
+
 **Request:**
 ```json
 {
   "backend": "ibm_brisbane",
-  "fidelity_target": 0.9,
+  "fidelity_target": 0.95,
   "use_real_hardware": false,
-  "shots": 0
+  "shots": 1024
 }
 ```
 
 **Response:**
 ```json
 {
-  "fidelity": 0.9,
+  "fidelity": 0.96,
   "measurements": {
-    "00": 0,
-    "": 
+    "00": 510,
+    "11": 514
   },
   "backend": "ibm_brisbane",
   "hardware": false,
-  "timestamp": "0--8T0:0:00Z",
+  "timestamp": "2025-12-18T10:30:00Z",
   "queue_time": 0
 }
 ```
+
+**Response Headers:**
+```
+X-API-Tier: Free
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 99
+X-RateLimit-Reset: 1734567890000
+```
+
+**Error Response (Free tier with `use_real_hardware: true`):**
+```json
+{
+  "error": "Real hardware access requires Pro or Enterprise tier. Upgrade at operations@sparse-supernova.com",
+  "code": "HARDWARE_ACCESS_DENIED"
+}
+```
+Status: `403 Forbidden`
 
 ### POST /quantum/bridge/chsh
 Perform CHSH test (Bell inequality).
@@ -75,7 +121,7 @@ Perform CHSH test (Bell inequality).
 **Request:**
 ```json
 {
-  "n_measurements": 000,
+  "n_measurements": 1000,
   "backend": "ibm_brisbane",
   "use_real_hardware": false
 }
@@ -84,7 +130,7 @@ Perform CHSH test (Bell inequality).
 **Response:**
 ```json
 {
-  "chsh_value": .88,
+  "chsh_value": 2.828,
   "violates_classical": true,
   "correlations": {
     "E_ab": 0.707,
@@ -105,10 +151,10 @@ List available quantum backends.
   "backends": [
     {
       "name": "ibm_brisbane",
-      "qubits": 7,
+      "qubits": 127,
       "status": "online",
-      "queue_length": ,
-      "quantum_volume": 
+      "queue_length": 5,
+      "quantum_volume": 64
     }
   ]
 }
@@ -121,9 +167,9 @@ Get specific backend information.
 ```json
 {
   "name": "ibm_brisbane",
-  "qubits": 7,
-  "quantum_volume": ,
-  "clops": 000,
+  "qubits": 127,
+  "quantum_volume": 64,
+  "clops": 15000,
   "status": "online",
   "capabilities": ["bell_pair", "qkd", "chsh"]
 }
@@ -136,9 +182,9 @@ Get bridge status.
 ```json
 {
   "status": "operational",
-  "backends_connected": ,
-  "uptime": "7h",
-  "requests_today": 
+  "backends_connected": 5,
+  "uptime": "72h",
+  "requests_today": 1523
 }
 ```
 
@@ -153,7 +199,7 @@ Register a quantum device.
 ```json
 {
   "type": "photonic",
-  "id": "photonic-lab-0",
+  "id": "photonic-lab-01",
   "capabilities": ["bell_pair", "qkd"]
 }
 ```
@@ -161,9 +207,9 @@ Register a quantum device.
 **Response:**
 ```json
 {
-  "device_id": "photonic-lab-0",
+  "device_id": "photonic-lab-01",
   "registered": true,
-  "timestamp": "0--8T0:0:00Z"
+  "timestamp": "2025-12-18T10:30:00Z"
 }
 ```
 
@@ -178,7 +224,7 @@ List available devices.
       "id": "ibm_brisbane",
       "type": "superconducting",
       "status": "online",
-      "qubits": 7
+      "qubits": 127
     }
   ]
 }
@@ -192,7 +238,7 @@ Execute operation on device.
 {
   "operation": "create_bell_pair",
   "params": {
-    "fidelity_target": 0.9
+    "fidelity_target": 0.95
   }
 }
 ```
@@ -201,10 +247,10 @@ Execute operation on device.
 ```json
 {
   "result": {
-    "fidelity": 0.9
+    "fidelity": 0.96
   },
   "device_id": "ibm_brisbane",
-  "execution_time": 0.
+  "execution_time": 0.5
 }
 ```
 
@@ -212,14 +258,14 @@ Execute operation on device.
 
 ## QKD Protocol Endpoints
 
-### POST /quantum/protocols/bb8
-Execute BB8 protocol.
+### POST /quantum/protocols/bb84
+Execute BB84 protocol.
 
 **Request:**
 ```json
 {
-  "n_qubits": 00,
-  "error_rate_threshold": 0.,
+  "n_qubits": 100,
+  "error_rate_threshold": 0.11,
   "use_real_hardware": false,
   "backend": "ibm_brisbane"
 }
@@ -228,23 +274,23 @@ Execute BB8 protocol.
 **Response:**
 ```json
 {
-  "secure_key_length": 8,
-  "raw_key_length": 00,
-  "error_rate": 0.0,
-  "session_id": "bb8-session-",
+  "secure_key_length": 85,
+  "raw_key_length": 100,
+  "error_rate": 0.05,
+  "session_id": "bb84-session-12345",
   "backend": "ibm_brisbane",
-  "timestamp": "0--8T0:0:00Z"
+  "timestamp": "2025-12-18T10:30:00Z"
 }
 ```
 
-### POST /quantum/protocols/e9
-Execute E9 protocol.
+### POST /quantum/protocols/e91
+Execute E91 protocol.
 
 **Request:**
 ```json
 {
-  "n_pairs": 00,
-  "chsh_threshold": .0,
+  "n_pairs": 100,
+  "chsh_threshold": 2.0,
   "use_real_hardware": false,
   "backend": "ibm_brisbane"
 }
@@ -253,19 +299,19 @@ Execute E9 protocol.
 **Response:**
 ```json
 {
-  "secure_key_length": 8,
-  "chsh_value": .88,
-  "error_rate": 0.0,
-  "session_id": "e9-session-7890",
+  "secure_key_length": 82,
+  "chsh_value": 2.828,
+  "error_rate": 0.04,
+  "session_id": "e91-session-67890",
   "entanglement_verified": true
 }
 ```
 
-### POST /quantum/protocols/sarg0
-Execute SARG0 protocol.
+### POST /quantum/protocols/sarg04
+Execute SARG04 protocol.
 
-### POST /quantum/protocols/bbm9
-Execute BBM9 protocol.
+### POST /quantum/protocols/bbm92
+Execute BBM92 protocol.
 
 ---
 
@@ -278,7 +324,7 @@ Initialize Quantum Ratchet session.
 ```json
 {
   "peer_id": "alice",
-  "qkd_protocol": "bb8",
+  "qkd_protocol": "bb84",
   "use_real_hardware": false,
   "backend": "ibm_brisbane"
 }
@@ -287,10 +333,10 @@ Initialize Quantum Ratchet session.
 **Response:**
 ```json
 {
-  "session_id": "ratchet-abc",
+  "session_id": "ratchet-abc123",
   "peer_id": "alice",
-  "protocol": "bb8",
-  "created_at": "0--8T0:0:00Z"
+  "protocol": "bb84",
+  "created_at": "2025-12-18T10:30:00Z"
 }
 ```
 
@@ -300,7 +346,7 @@ Encrypt message.
 **Request:**
 ```json
 {
-  "session_id": "ratchet-abc",
+  "session_id": "ratchet-abc123",
   "message": "Secret message"
 }
 ```
@@ -329,9 +375,9 @@ Mint SSC tokens.
 **Request:**
 ```json
 {
-  "amount": 00,
-  "energy_saved": .,
-  "carbon_reduced": 0.7,
+  "amount": 100,
+  "energy_saved": 1.5,
+  "carbon_reduced": 0.75,
   "operation_type": "quantum_entanglement"
 }
 ```
@@ -339,9 +385,9 @@ Mint SSC tokens.
 **Response:**
 ```json
 {
-  "tokens": 00,
-  "tx_id": "tx-",
-  "timestamp": "0--8T0:0:00Z"
+  "tokens": 100,
+  "tx_id": "tx-123456",
+  "timestamp": "2025-12-18T10:30:00Z"
 }
 ```
 
@@ -351,9 +397,9 @@ Get SSC balance.
 **Response:**
 ```json
 {
-  "ssc": 00,
-  "carbon_credits": 7.,
-  "energy_saved": .0
+  "ssc": 1500,
+  "carbon_credits": 7.5,
+  "energy_saved": 15.0
 }
 ```
 
@@ -362,17 +408,17 @@ Transfer SSC tokens.
 
 ---
 
-## PP Network Endpoints
+## P2P Network Endpoints
 
-### POST /quantum/pp/connect
-Establish PP connection.
+### POST /quantum/p2p/connect
+Establish P2P connection.
 
 **Request:**
 ```json
 {
   "peer_id": "bob",
   "enable_qkd": true,
-  "protocol": "bb8",
+  "protocol": "bb84",
   "use_real_hardware": false
 }
 ```
@@ -380,14 +426,14 @@ Establish PP connection.
 **Response:**
 ```json
 {
-  "connection_id": "conn-abc",
+  "connection_id": "conn-abc123",
   "status": "connected",
   "qkd_enabled": true
 }
 ```
 
-### POST /quantum/pp/send
-Send message via PP.
+### POST /quantum/p2p/send
+Send message via P2P.
 
 **Request:**
 ```json
@@ -432,15 +478,27 @@ All endpoints return errors in this format:
 
 ## Rate Limits
 
-- **Free Tier:** 00 requests/day
-- **Pro Tier:** 0,000 requests/day
+Rate limits are enforced per API key and tracked per minute, per hour, and per day.
+
+- **Free Tier** (`free_*` keys): 100 requests/day, 10/hour, 2/minute - Simulation mode only
+- **Pro Tier** (`pro_*` keys): 10,000 requests/day, 1,000/hour, 100/minute - Real hardware access
+- **Enterprise Tier** (`ent_*` keys): Unlimited - Real hardware access
+
+All responses include rate limit headers:
+- `X-API-Tier`: Tier name (Free, Pro, Enterprise)
+- `X-RateLimit-Limit`: Daily request limit
+- `X-RateLimit-Remaining`: Remaining requests today
+- `X-RateLimit-Reset`: Timestamp when limit resets
+
+See [API_TIERS.md](API_TIERS.md) for complete tier documentation.
+- **Pro Tier:** 10,000 requests/day
 - **Enterprise:** Unlimited
 
 Rate limit headers:
 ```
-X-RateLimit-Limit: 0000
-X-RateLimit-Remaining: 990
-X-RateLimit-Reset: 0000000
+X-RateLimit-Limit: 10000
+X-RateLimit-Remaining: 9950
+X-RateLimit-Reset: 1640000000
 ```
 
 ---
