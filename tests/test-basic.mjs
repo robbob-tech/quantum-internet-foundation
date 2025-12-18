@@ -3,7 +3,7 @@
 
 import { QuantumInternetClient } from '../src/index.mjs';
 
-console.log('🧪 Running Basic Tests\n');
+console.log(' Running Basic Tests\n');
 
 let passed = 0;
 let failed = 0;
@@ -11,10 +11,10 @@ let failed = 0;
 function test(name, fn) {
   try {
     fn();
-    console.log(`✅ ${name}`);
+    console.log(` ${name}`);
     passed++;
   } catch (error) {
-    console.log(`❌ ${name}: ${error.message}`);
+    console.log(` ${name}: ${error.message}`);
     failed++;
   }
 }
@@ -165,5 +165,5 @@ console.log('='.repeat(50));
 if (failed > 0) {
   process.exit(1);
 } else {
-  console.log('\n✅ All tests passed!\n');
+  console.log('\n All tests passed!\n');
 }

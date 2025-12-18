@@ -2,7 +2,7 @@
 
 This document specifies the API endpoints that YOUR backend must implement to support the Quantum Internet Foundation client library.
 
-**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v1`
+**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v`
 
 **Note:** This API is deployed on Cloudflare Workers. You can use a custom domain by configuring it in Cloudflare.
 
@@ -19,7 +19,7 @@ Health check endpoint.
 ```json
 {
   "status": "ok",
-  "timestamp": "2025-12-18T10:30:00Z"
+  "timestamp": "0--8T0:0:00Z"
 }
 ```
 
@@ -30,9 +30,9 @@ API status and version information.
 ```json
 {
   "status": "operational",
-  "version": "1.0.0",
-  "uptime": "72h 15m",
-  "backends_connected": 5,
+  "version": ".0.0",
+  "uptime": "7h m",
+  "backends_connected": ,
   "real_hardware_available": true
 }
 ```
@@ -48,23 +48,23 @@ Create an entangled Bell pair.
 ```json
 {
   "backend": "ibm_brisbane",
-  "fidelity_target": 0.95,
+  "fidelity_target": 0.9,
   "use_real_hardware": false,
-  "shots": 1024
+  "shots": 0
 }
 ```
 
 **Response:**
 ```json
 {
-  "fidelity": 0.96,
+  "fidelity": 0.9,
   "measurements": {
-    "00": 510,
-    "11": 514
+    "00": 0,
+    "": 
   },
   "backend": "ibm_brisbane",
   "hardware": false,
-  "timestamp": "2025-12-18T10:30:00Z",
+  "timestamp": "0--8T0:0:00Z",
   "queue_time": 0
 }
 ```
@@ -75,7 +75,7 @@ Perform CHSH test (Bell inequality).
 **Request:**
 ```json
 {
-  "n_measurements": 1000,
+  "n_measurements": 000,
   "backend": "ibm_brisbane",
   "use_real_hardware": false
 }
@@ -84,7 +84,7 @@ Perform CHSH test (Bell inequality).
 **Response:**
 ```json
 {
-  "chsh_value": 2.828,
+  "chsh_value": .88,
   "violates_classical": true,
   "correlations": {
     "E_ab": 0.707,
@@ -105,10 +105,10 @@ List available quantum backends.
   "backends": [
     {
       "name": "ibm_brisbane",
-      "qubits": 127,
+      "qubits": 7,
       "status": "online",
-      "queue_length": 5,
-      "quantum_volume": 64
+      "queue_length": ,
+      "quantum_volume": 
     }
   ]
 }
@@ -121,9 +121,9 @@ Get specific backend information.
 ```json
 {
   "name": "ibm_brisbane",
-  "qubits": 127,
-  "quantum_volume": 64,
-  "clops": 15000,
+  "qubits": 7,
+  "quantum_volume": ,
+  "clops": 000,
   "status": "online",
   "capabilities": ["bell_pair", "qkd", "chsh"]
 }
@@ -136,9 +136,9 @@ Get bridge status.
 ```json
 {
   "status": "operational",
-  "backends_connected": 5,
-  "uptime": "72h",
-  "requests_today": 1523
+  "backends_connected": ,
+  "uptime": "7h",
+  "requests_today": 
 }
 ```
 
@@ -153,7 +153,7 @@ Register a quantum device.
 ```json
 {
   "type": "photonic",
-  "id": "photonic-lab-01",
+  "id": "photonic-lab-0",
   "capabilities": ["bell_pair", "qkd"]
 }
 ```
@@ -161,9 +161,9 @@ Register a quantum device.
 **Response:**
 ```json
 {
-  "device_id": "photonic-lab-01",
+  "device_id": "photonic-lab-0",
   "registered": true,
-  "timestamp": "2025-12-18T10:30:00Z"
+  "timestamp": "0--8T0:0:00Z"
 }
 ```
 
@@ -178,7 +178,7 @@ List available devices.
       "id": "ibm_brisbane",
       "type": "superconducting",
       "status": "online",
-      "qubits": 127
+      "qubits": 7
     }
   ]
 }
@@ -192,7 +192,7 @@ Execute operation on device.
 {
   "operation": "create_bell_pair",
   "params": {
-    "fidelity_target": 0.95
+    "fidelity_target": 0.9
   }
 }
 ```
@@ -201,10 +201,10 @@ Execute operation on device.
 ```json
 {
   "result": {
-    "fidelity": 0.96
+    "fidelity": 0.9
   },
   "device_id": "ibm_brisbane",
-  "execution_time": 0.5
+  "execution_time": 0.
 }
 ```
 
@@ -212,14 +212,14 @@ Execute operation on device.
 
 ## QKD Protocol Endpoints
 
-### POST /quantum/protocols/bb84
-Execute BB84 protocol.
+### POST /quantum/protocols/bb8
+Execute BB8 protocol.
 
 **Request:**
 ```json
 {
-  "n_qubits": 100,
-  "error_rate_threshold": 0.11,
+  "n_qubits": 00,
+  "error_rate_threshold": 0.,
   "use_real_hardware": false,
   "backend": "ibm_brisbane"
 }
@@ -228,23 +228,23 @@ Execute BB84 protocol.
 **Response:**
 ```json
 {
-  "secure_key_length": 85,
-  "raw_key_length": 100,
-  "error_rate": 0.05,
-  "session_id": "bb84-session-12345",
+  "secure_key_length": 8,
+  "raw_key_length": 00,
+  "error_rate": 0.0,
+  "session_id": "bb8-session-",
   "backend": "ibm_brisbane",
-  "timestamp": "2025-12-18T10:30:00Z"
+  "timestamp": "0--8T0:0:00Z"
 }
 ```
 
-### POST /quantum/protocols/e91
-Execute E91 protocol.
+### POST /quantum/protocols/e9
+Execute E9 protocol.
 
 **Request:**
 ```json
 {
-  "n_pairs": 100,
-  "chsh_threshold": 2.0,
+  "n_pairs": 00,
+  "chsh_threshold": .0,
   "use_real_hardware": false,
   "backend": "ibm_brisbane"
 }
@@ -253,19 +253,19 @@ Execute E91 protocol.
 **Response:**
 ```json
 {
-  "secure_key_length": 82,
-  "chsh_value": 2.828,
-  "error_rate": 0.04,
-  "session_id": "e91-session-67890",
+  "secure_key_length": 8,
+  "chsh_value": .88,
+  "error_rate": 0.0,
+  "session_id": "e9-session-7890",
   "entanglement_verified": true
 }
 ```
 
-### POST /quantum/protocols/sarg04
-Execute SARG04 protocol.
+### POST /quantum/protocols/sarg0
+Execute SARG0 protocol.
 
-### POST /quantum/protocols/bbm92
-Execute BBM92 protocol.
+### POST /quantum/protocols/bbm9
+Execute BBM9 protocol.
 
 ---
 
@@ -278,7 +278,7 @@ Initialize Quantum Ratchet session.
 ```json
 {
   "peer_id": "alice",
-  "qkd_protocol": "bb84",
+  "qkd_protocol": "bb8",
   "use_real_hardware": false,
   "backend": "ibm_brisbane"
 }
@@ -287,10 +287,10 @@ Initialize Quantum Ratchet session.
 **Response:**
 ```json
 {
-  "session_id": "ratchet-abc123",
+  "session_id": "ratchet-abc",
   "peer_id": "alice",
-  "protocol": "bb84",
-  "created_at": "2025-12-18T10:30:00Z"
+  "protocol": "bb8",
+  "created_at": "0--8T0:0:00Z"
 }
 ```
 
@@ -300,7 +300,7 @@ Encrypt message.
 **Request:**
 ```json
 {
-  "session_id": "ratchet-abc123",
+  "session_id": "ratchet-abc",
   "message": "Secret message"
 }
 ```
@@ -329,9 +329,9 @@ Mint SSC tokens.
 **Request:**
 ```json
 {
-  "amount": 100,
-  "energy_saved": 1.5,
-  "carbon_reduced": 0.75,
+  "amount": 00,
+  "energy_saved": .,
+  "carbon_reduced": 0.7,
   "operation_type": "quantum_entanglement"
 }
 ```
@@ -339,9 +339,9 @@ Mint SSC tokens.
 **Response:**
 ```json
 {
-  "tokens": 100,
-  "tx_id": "tx-123456",
-  "timestamp": "2025-12-18T10:30:00Z"
+  "tokens": 00,
+  "tx_id": "tx-",
+  "timestamp": "0--8T0:0:00Z"
 }
 ```
 
@@ -351,9 +351,9 @@ Get SSC balance.
 **Response:**
 ```json
 {
-  "ssc": 1500,
-  "carbon_credits": 7.5,
-  "energy_saved": 15.0
+  "ssc": 00,
+  "carbon_credits": 7.,
+  "energy_saved": .0
 }
 ```
 
@@ -362,17 +362,17 @@ Transfer SSC tokens.
 
 ---
 
-## P2P Network Endpoints
+## PP Network Endpoints
 
-### POST /quantum/p2p/connect
-Establish P2P connection.
+### POST /quantum/pp/connect
+Establish PP connection.
 
 **Request:**
 ```json
 {
   "peer_id": "bob",
   "enable_qkd": true,
-  "protocol": "bb84",
+  "protocol": "bb8",
   "use_real_hardware": false
 }
 ```
@@ -380,14 +380,14 @@ Establish P2P connection.
 **Response:**
 ```json
 {
-  "connection_id": "conn-abc123",
+  "connection_id": "conn-abc",
   "status": "connected",
   "qkd_enabled": true
 }
 ```
 
-### POST /quantum/p2p/send
-Send message via P2P.
+### POST /quantum/pp/send
+Send message via PP.
 
 **Request:**
 ```json
@@ -432,15 +432,15 @@ All endpoints return errors in this format:
 
 ## Rate Limits
 
-- **Free Tier:** 100 requests/day
-- **Pro Tier:** 10,000 requests/day
+- **Free Tier:** 00 requests/day
+- **Pro Tier:** 0,000 requests/day
 - **Enterprise:** Unlimited
 
 Rate limit headers:
 ```
-X-RateLimit-Limit: 10000
-X-RateLimit-Remaining: 9950
-X-RateLimit-Reset: 1640000000
+X-RateLimit-Limit: 0000
+X-RateLimit-Remaining: 990
+X-RateLimit-Reset: 0000000
 ```
 
 ---

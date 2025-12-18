@@ -2,26 +2,26 @@
 
 Complete API documentation for the Quantum Internet Foundation client library.
 
-**Version:** 1.0.0  
-**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v1`
+**Version:** .0.0  
+**Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v`
 
 ---
 
 ## Table of Contents
 
-1. [Getting Started](#getting-started)
-2. [Authentication](#authentication)
-3. [Client Configuration](#client-configuration)
-4. [Quantum Bridge API](#quantum-bridge-api)
-5. [Q-HAL API](#q-hal-api)
-6. [QKD Protocols API](#qkd-protocols-api)
+. [Getting Started](#getting-started)
+. [Authentication](#authentication)
+. [Client Configuration](#client-configuration)
+. [Quantum Bridge API](#quantum-bridge-api)
+. [Q-HAL API](#q-hal-api)
+. [QKD Protocols API](#qkd-protocols-api)
 7. [Quantum Ratchet API](#quantum-ratchet-api)
 8. [SSC Economics API](#ssc-economics-api)
-9. [P2P Network API](#p2p-network-api)
-10. [Error Handling](#error-handling)
-11. [Rate Limits](#rate-limits)
-12. [TypeScript Support](#typescript-support)
-13. [Examples](#examples)
+9. [PP Network API](#pp-network-api)
+0. [Error Handling](#error-handling)
+. [Rate Limits](#rate-limits)
+. [TypeScript Support](#typescript-support)
+. [Examples](#examples)
 
 ---
 
@@ -55,12 +55,12 @@ All API requests require authentication via an API key.
 
 ### Setting API Key
 
-**Option 1: Environment Variable (Recommended)**
+**Option : Environment Variable (Recommended)**
 ```bash
 export QUANTUM_INTERNET_API_KEY="sk_your_api_key_here"
 ```
 
-**Option 2: Constructor Parameter**
+**Option : Constructor Parameter**
 ```javascript
 const client = new QuantumInternetClient({
   apiKey: 'sk_your_api_key_here'
@@ -82,8 +82,8 @@ API keys follow the format: `sk_...` for standard keys, or `pk_...` for public k
 ```typescript
 interface QuantumInternetClientConfig {
   apiKey?: string;           // API key (or use QUANTUM_INTERNET_API_KEY env var)
-  baseUrl?: string;          // Base API URL (default: https://quantum-internet-api.sparsesupernova.workers.dev/v1)
-  timeout?: number;          // Request timeout in ms (default: 30000)
+  baseUrl?: string;          // Base API URL (default: https://quantum-internet-api.sparsesupernova.workers.dev/v)
+  timeout?: number;          // Request timeout in ms (default: 0000)
   debug?: boolean;           // Enable debug logging (default: false)
   skipAuth?: boolean;        // Skip authentication (for testing only)
 }
@@ -94,8 +94,8 @@ interface QuantumInternetClientConfig {
 ```javascript
 const client = new QuantumInternetClient({
   apiKey: 'sk_...',
-    baseUrl: 'https://quantum-internet-api.sparsesupernova.workers.dev/v1',
-  timeout: 60000,  // 60 seconds
+    baseUrl: 'https://quantum-internet-api.sparsesupernova.workers.dev/v',
+  timeout: 0000,  // 0 seconds
   debug: true      // Log all requests/responses
 });
 ```
@@ -115,8 +115,8 @@ Create an entangled Bell pair on quantum hardware.
 interface BellPairOptions {
   backend?: string;          // Quantum backend name (default: 'ibm_brisbane')
   useRealHardware?: boolean; // Use real hardware vs simulator (default: false)
-  fidelity?: number;         // Target fidelity 0-1 (default: 0.95)
-  shots?: number;           // Number of measurement shots (default: 1024)
+  fidelity?: number;         // Target fidelity 0- (default: 0.9)
+  shots?: number;           // Number of measurement shots (default: 0)
 }
 ```
 
@@ -124,10 +124,10 @@ interface BellPairOptions {
 ```typescript
 interface BellPairResult {
   fidelity: number;                    // Achieved fidelity
-  measurements: Record<string, number>; // Measurement counts (e.g., {"00": 510, "11": 514})
+  measurements: Record<string, number>; // Measurement counts (e.g., {"00": 0, "": })
   backend: string;                     // Backend used
   hardware: boolean;                    // true if real hardware was used
-  timestamp: string;                    // ISO 8601 timestamp
+  timestamp: string;                    // ISO 80 timestamp
   queue_time?: number;                  // Queue wait time in seconds
 }
 ```
@@ -137,8 +137,8 @@ interface BellPairResult {
 const bellPair = await client.bridge.createBellPair({
   backend: 'ibm_brisbane',
   useRealHardware: true,
-  fidelity: 0.95,
-  shots: 1024
+  fidelity: 0.9,
+  shots: 0
 });
 
 console.log(`Fidelity: ${bellPair.fidelity}`);
@@ -154,7 +154,7 @@ Perform CHSH test (Bell inequality violation test).
 **Parameters:**
 ```typescript
 interface CHSHOptions {
-  measurements?: number;     // Number of measurements (default: 1000)
+  measurements?: number;     // Number of measurements (default: 000)
   backend?: string;          // Quantum backend name
   useRealHardware?: boolean; // Use real hardware
 }
@@ -163,8 +163,8 @@ interface CHSHOptions {
 **Returns:**
 ```typescript
 interface CHSHResult {
-  chsh_value: number;              // CHSH value (classical â‰¤ 2, quantum â‰¤ 2âˆš2 â‰ˆ 2.828)
-  violates_classical: boolean;     // true if CHSH > 2.0
+  chsh_value: number;              // CHSH value (classical  , quantum    .88)
+  violates_classical: boolean;     // true if CHSH > .0
   correlations: {
     E_ab: number;                  // Correlation E(a,b)
     E_ab_prime: number;            // Correlation E(a,b')
@@ -179,7 +179,7 @@ interface CHSHResult {
 **Example:**
 ```javascript
 const chsh = await client.bridge.performCHSH({
-  measurements: 1000,
+  measurements: 000,
   backend: 'ibm_brisbane',
   useRealHardware: true
 });
@@ -199,7 +199,7 @@ Execute arbitrary quantum circuit on backend.
 interface CircuitOptions {
   circuit: Array<any>;       // Quantum circuit definition
   backend?: string;          // Quantum backend name
-  shots?: number;            // Number of shots (default: 1024)
+  shots?: number;            // Number of shots (default: 0)
   useRealHardware?: boolean; // Use real hardware
 }
 ```
@@ -274,7 +274,7 @@ Get quantum bridge system status.
 {
   status: string;            // 'operational' | 'degraded' | 'offline'
   backends_connected: number;
-  uptime: string;            // e.g., "72h 15m"
+  uptime: string;            // e.g., "7h m"
   requests_today: number;
 }
 ```
@@ -413,7 +413,7 @@ Execute an operation on a specific device.
 const result = await client.qhal.executeOperation(
   'ibm_brisbane',
   'create_bell_pair',
-  { fidelity_target: 0.95 }
+  { fidelity_target: 0.9 }
 );
 ```
 
@@ -426,7 +426,7 @@ Get device performance metrics.
 **Parameters:**
 - `deviceId` (string): Device identifier
 - `options` (object): Optional query parameters
-  - `timeframe?: string` - '1h' | '24h' | '7d' | '30d'
+  - `timeframe?: string` - 'h' | 'h' | '7d' | '0d'
   - `metric?: string` - Specific metric to retrieve
 
 **Returns:**
@@ -455,7 +455,7 @@ Get device error log.
 
 **Parameters:**
 - `deviceId` (string): Device identifier
-- `limit` (number): Number of recent errors to retrieve (default: 10)
+- `limit` (number): Number of recent errors to retrieve (default: 0)
 
 **Returns:**
 ```typescript
@@ -512,17 +512,17 @@ Get Q-HAL system status.
 
 Quantum Key Distribution protocols for secure key exchange.
 
-### BB84 Protocol
+### BB8 Protocol
 
-#### `client.protocols.bb84.execute(options)`
+#### `client.protocols.bb8.execute(options)`
 
-Execute BB84 QKD protocol.
+Execute BB8 QKD protocol.
 
 **Parameters:**
 ```typescript
-interface BB84Options {
-  nQubits?: number;              // Number of qubits (default: 100)
-  errorThreshold?: number;        // Error rate threshold (default: 0.11)
+interface BB8Options {
+  nQubits?: number;              // Number of qubits (default: 00)
+  errorThreshold?: number;        // Error rate threshold (default: 0.)
   useRealHardware?: boolean;      // Use real hardware
   backend?: string;               // Quantum backend name
   privacyAmplification?: boolean; // Apply privacy amplification (default: true)
@@ -533,7 +533,7 @@ interface BB84Options {
 
 **Returns:**
 ```typescript
-interface BB84Result {
+interface BB8Result {
   secure_key_length: number;      // Final secure key length in bits
   raw_key_length: number;         // Raw key length before processing
   error_rate: number;             // Detected error rate
@@ -547,24 +547,24 @@ interface BB84Result {
 
 **Example:**
 ```javascript
-const bb84 = await client.protocols.bb84.execute({
-  nQubits: 100,
+const bb8 = await client.protocols.bb8.execute({
+  nQubits: 00,
   useRealHardware: true,
   backend: 'ibm_brisbane'
 });
 
-console.log(`Secure Key: ${bb84.secure_key_length} bits`);
-console.log(`Error Rate: ${bb84.error_rate}`);
+console.log(`Secure Key: ${bb8.secure_key_length} bits`);
+console.log(`Error Rate: ${bb8.error_rate}`);
 ```
 
 ---
 
-#### `client.protocols.bb84.getKeyStatistics(sessionId)`
+#### `client.protocols.bb8.getKeyStatistics(sessionId)`
 
-Get BB84 session key statistics.
+Get BB8 session key statistics.
 
 **Parameters:**
-- `sessionId` (string): BB84 session identifier
+- `sessionId` (string): BB8 session identifier
 
 **Returns:**
 ```typescript
@@ -580,12 +580,12 @@ Get BB84 session key statistics.
 
 ---
 
-#### `client.protocols.bb84.validateSecurity(sessionId)`
+#### `client.protocols.bb8.validateSecurity(sessionId)`
 
-Validate BB84 session security.
+Validate BB8 session security.
 
 **Parameters:**
-- `sessionId` (string): BB84 session identifier
+- `sessionId` (string): BB8 session identifier
 
 **Returns:**
 ```typescript
@@ -601,17 +601,17 @@ Validate BB84 session security.
 
 ---
 
-### E91 Protocol
+### E9 Protocol
 
-#### `client.protocols.e91.execute(options)`
+#### `client.protocols.e9.execute(options)`
 
-Execute E91 QKD protocol (entanglement-based with CHSH test).
+Execute E9 QKD protocol (entanglement-based with CHSH test).
 
 **Parameters:**
 ```typescript
-interface E91Options {
-  nPairs?: number;                // Number of entangled pairs (default: 100)
-  chshThreshold?: number;          // CHSH threshold (default: 2.0)
+interface E9Options {
+  nPairs?: number;                // Number of entangled pairs (default: 00)
+  chshThreshold?: number;          // CHSH threshold (default: .0)
   useRealHardware?: boolean;      // Use real hardware
   backend?: string;                // Quantum backend name
   eavesdropperDetection?: boolean; // Enable eavesdropper detection (default: true)
@@ -620,7 +620,7 @@ interface E91Options {
 
 **Returns:**
 ```typescript
-interface E91Result {
+interface E9Result {
   secure_key_length: number;      // Final secure key length
   chsh_value: number;              // CHSH test value
   error_rate: number;
@@ -631,25 +631,25 @@ interface E91Result {
 
 **Example:**
 ```javascript
-const e91 = await client.protocols.e91.execute({
-  nPairs: 100,
+const e9 = await client.protocols.e9.execute({
+  nPairs: 00,
   useRealHardware: true,
   backend: 'ibm_brisbane'
 });
 
-console.log(`CHSH Value: ${e91.chsh_value}`);
-console.log(`Entanglement Verified: ${e91.entanglement_verified}`);
-console.log(`Secure Key: ${e91.secure_key_length} bits`);
+console.log(`CHSH Value: ${e9.chsh_value}`);
+console.log(`Entanglement Verified: ${e9.entanglement_verified}`);
+console.log(`Secure Key: ${e9.secure_key_length} bits`);
 ```
 
 ---
 
-#### `client.protocols.e91.getCHSHStatistics(sessionId)`
+#### `client.protocols.e9.getCHSHStatistics(sessionId)`
 
-Get E91 CHSH test statistics.
+Get E9 CHSH test statistics.
 
 **Parameters:**
-- `sessionId` (string): E91 session identifier
+- `sessionId` (string): E9 session identifier
 
 **Returns:**
 ```typescript
@@ -668,12 +668,12 @@ Get E91 CHSH test statistics.
 
 ---
 
-#### `client.protocols.e91.validateEntanglement(sessionId)`
+#### `client.protocols.e9.validateEntanglement(sessionId)`
 
-Validate entanglement in E91 session.
+Validate entanglement in E9 session.
 
 **Parameters:**
-- `sessionId` (string): E91 session identifier
+- `sessionId` (string): E9 session identifier
 
 **Returns:**
 ```typescript
@@ -687,15 +687,15 @@ Validate entanglement in E91 session.
 
 ---
 
-### SARG04 Protocol
+### SARG0 Protocol
 
-#### `client.protocols.sarg04.execute(options)`
+#### `client.protocols.sarg0.execute(options)`
 
-Execute SARG04 QKD protocol (PNS attack resistant).
+Execute SARG0 QKD protocol (PNS attack resistant).
 
 **Parameters:**
 ```typescript
-interface SARG04Options {
+interface SARG0Options {
   nQubits?: number;               // Number of qubits
   useRealHardware?: boolean;      // Use real hardware
   backend?: string;                // Quantum backend name
@@ -718,12 +718,12 @@ interface SARG04Options {
 
 ---
 
-#### `client.protocols.sarg04.getKeyStatistics(sessionId)`
+#### `client.protocols.sarg0.getKeyStatistics(sessionId)`
 
-Get SARG04 session statistics.
+Get SARG0 session statistics.
 
 **Parameters:**
-- `sessionId` (string): SARG04 session identifier
+- `sessionId` (string): SARG0 session identifier
 
 **Returns:**
 ```typescript
@@ -737,15 +737,15 @@ Get SARG04 session statistics.
 
 ---
 
-### BBM92 Protocol
+### BBM9 Protocol
 
-#### `client.protocols.bbm92.execute(options)`
+#### `client.protocols.bbm9.execute(options)`
 
-Execute BBM92 QKD protocol (entanglement-based).
+Execute BBM9 QKD protocol (entanglement-based).
 
 **Parameters:**
 ```typescript
-interface BBM92Options {
+interface BBM9Options {
   nPairs?: number;                // Number of entangled pairs
   useRealHardware?: boolean;      // Use real hardware
   backend?: string;                // Quantum backend name
@@ -768,12 +768,12 @@ interface BBM92Options {
 
 ---
 
-#### `client.protocols.bbm92.getKeyStatistics(sessionId)`
+#### `client.protocols.bbm9.getKeyStatistics(sessionId)`
 
-Get BBM92 session statistics.
+Get BBM9 session statistics.
 
 **Parameters:**
-- `sessionId` (string): BBM92 session identifier
+- `sessionId` (string): BBM9 session identifier
 
 **Returns:**
 ```typescript
@@ -787,12 +787,12 @@ Get BBM92 session statistics.
 
 ---
 
-#### `client.protocols.bbm92.validateEntanglement(sessionId)`
+#### `client.protocols.bbm9.validateEntanglement(sessionId)`
 
-Validate entanglement in BBM92 session.
+Validate entanglement in BBM9 session.
 
 **Parameters:**
-- `sessionId` (string): BBM92 session identifier
+- `sessionId` (string): BBM9 session identifier
 
 **Returns:**
 ```typescript
@@ -817,10 +817,10 @@ Initialize a Quantum Ratchet session.
 ```typescript
 interface QuantumRatchetInitOptions {
   peerId: string;                 // Peer identifier (required)
-  qkdProtocol?: string;           // QKD protocol: 'bb84' | 'e91' | 'sarg04' | 'bbm92' (default: 'bb84')
+  qkdProtocol?: string;           // QKD protocol: 'bb8' | 'e9' | 'sarg0' | 'bbm9' (default: 'bb8')
   useRealHardware?: boolean;      // Use real quantum hardware for QKD
   backend?: string;                // Quantum backend name
-  keyRefreshInterval?: number;    // Key refresh interval in messages (default: 100)
+  keyRefreshInterval?: number;    // Key refresh interval in messages (default: 00)
 }
 ```
 
@@ -830,7 +830,7 @@ interface QuantumRatchetSession {
   session_id: string;             // Session identifier
   peer_id: string;
   protocol: string;                // QKD protocol used
-  created_at: string;              // ISO 8601 timestamp
+  created_at: string;              // ISO 80 timestamp
   key_refresh_interval: number;
 }
 ```
@@ -839,7 +839,7 @@ interface QuantumRatchetSession {
 ```javascript
 const session = await client.ratchet.initialize({
   peerId: 'alice',
-  qkdProtocol: 'bb84',
+  qkdProtocol: 'bb8',
   useRealHardware: true,
   backend: 'ibm_brisbane'
 });
@@ -1013,7 +1013,7 @@ Mint SSC tokens based on energy savings and carbon reduction.
 interface SSCMintOptions {
   amount: number;                 // Amount of SSC to mint (required)
   energySaved: number;            // Energy saved in kWh (required)
-  carbonReduced: number;          // Carbon reduced in kg COâ‚‚ (required)
+  carbonReduced: number;          // Carbon reduced in kg CO‚‚ (required)
   operationType: string;          // Operation type: 'quantum_entanglement' | 'qkd' | 'quantum_computation' (required)
   recipient?: string;             // Recipient address (optional, defaults to API key owner)
   metadata?: Record<string, any>; // Additional metadata
@@ -1034,9 +1034,9 @@ interface SSCMintResult {
 **Example:**
 ```javascript
 const minted = await client.ssc.mint({
-  amount: 100,
-  energySaved: 1.5,      // kWh
-  carbonReduced: 0.75,    // kg COâ‚‚
+  amount: 00,
+  energySaved: .,      // kWh
+  carbonReduced: 0.7,    // kg CO‚‚
   operationType: 'quantum_entanglement'
 });
 
@@ -1058,7 +1058,7 @@ Get SSC balance for an address.
 {
   address: string;
   ssc: number;                    // SSC token balance
-  carbon_credits: number;         // Carbon credits (kg COâ‚‚)
+  carbon_credits: number;         // Carbon credits (kg CO‚‚)
   energy_saved: number;           // Total energy saved (kWh)
   staked: number;                 // Staked SSC tokens
   available: number;              // Available SSC tokens
@@ -1069,7 +1069,7 @@ Get SSC balance for an address.
 ```javascript
 const balance = await client.ssc.getBalance('wallet_address_here');
 console.log(`Balance: ${balance.ssc} SSC`);
-console.log(`Carbon Credits: ${balance.carbon_credits} kg COâ‚‚`);
+console.log(`Carbon Credits: ${balance.carbon_credits} kg CO‚‚`);
 ```
 
 ---
@@ -1105,7 +1105,7 @@ interface SSCTransferOptions {
 const transfer = await client.ssc.transfer({
   from: 'address_a',
   to: 'address_b',
-  amount: 50,
+  amount: 0,
   memo: 'Payment for quantum services'
 });
 
@@ -1121,7 +1121,7 @@ Get transaction history for an address.
 **Parameters:**
 - `address` (string): Wallet address
 - `options` (object): Query options
-  - `limit?: number` - Number of transactions (default: 10)
+  - `limit?: number` - Number of transactions (default: 0)
   - `offset?: number` - Pagination offset (default: 0)
 
 **Returns:**
@@ -1156,7 +1156,7 @@ Get carbon credit statistics.
 ```typescript
 {
   address?: string;               // Present if address provided
-  carbon_credits: number;         // Total carbon credits (kg COâ‚‚)
+  carbon_credits: number;         // Total carbon credits (kg CO‚‚)
   energy_saved: number;           // Total energy saved (kWh)
   operations_count: number;       // Number of operations
   equivalent_trees: number;       // Equivalent trees planted
@@ -1195,7 +1195,7 @@ Stake SSC tokens.
 interface StakeOptions {
   address: string;                 // Staker address
   amount: number;                  // Amount to stake
-  duration: number;                 // Staking duration in days (default: 30)
+  duration: number;                 // Staking duration in days (default: 0)
 }
 ```
 
@@ -1207,7 +1207,7 @@ interface StakeOptions {
   amount: number;
   duration: number;
   expected_reward: number;        // Expected reward percentage
-  unlock_date: string;             // ISO 8601 timestamp
+  unlock_date: string;             // ISO 80 timestamp
   timestamp: string;
 }
 ```
@@ -1223,13 +1223,13 @@ Get SSC system-wide statistics.
 {
   total_supply: number;           // Total SSC supply
   circulating_supply: number;     // Circulating supply
-  total_carbon_credits: number;   // Total carbon credits (kg COâ‚‚)
+  total_carbon_credits: number;   // Total carbon credits (kg CO‚‚)
   total_energy_saved: number;      // Total energy saved (kWh)
   active_addresses: number;       // Number of active addresses
   transactions_count: number;     // Total transactions
   market_stats?: {
     price: number;
-    volume_24h: number;
+    volume_h: number;
     market_cap: number;
   };
 }
@@ -1237,20 +1237,20 @@ Get SSC system-wide statistics.
 
 ---
 
-## P2P Network API
+## PP Network API
 
-P2P quantum-secured mesh networking.
+PP quantum-secured mesh networking.
 
-### `client.p2p.connect(options)`
+### `client.pp.connect(options)`
 
-Establish P2P connection with quantum security.
+Establish PP connection with quantum security.
 
 **Parameters:**
 ```typescript
-interface P2PConnectOptions {
+interface PPConnectOptions {
   peerId: string;                  // Peer identifier to connect to (required)
   enableQKD?: boolean;            // Enable quantum key distribution (default: false)
-  protocol?: string;               // QKD protocol: 'bb84' | 'e91' | 'sarg04' | 'bbm92' (default: 'bb84')
+  protocol?: string;               // QKD protocol: 'bb8' | 'e9' | 'sarg0' | 'bbm9' (default: 'bb8')
   useRealHardware?: boolean;      // Use real quantum hardware
   backend?: string;                // Quantum backend name
   encryption?: boolean;            // Enable encryption (default: true)
@@ -1272,10 +1272,10 @@ interface P2PConnectOptions {
 
 **Example:**
 ```javascript
-const connection = await client.p2p.connect({
+const connection = await client.pp.connect({
   peerId: 'bob',
   enableQKD: true,
-  protocol: 'bb84',
+  protocol: 'bb8',
   useRealHardware: true
 });
 
@@ -1284,13 +1284,13 @@ console.log(`Connected: ${connection.connection_id}`);
 
 ---
 
-### `client.p2p.send(options)`
+### `client.pp.send(options)`
 
-Send message via P2P network.
+Send message via PP network.
 
 **Parameters:**
 ```typescript
-interface P2PSendOptions {
+interface PPSendOptions {
   destination: string;             // Destination peer ID (required)
   payload: any;                    // Message payload (required)
   useQKD?: boolean;               // Use QKD for this message (default: false)
@@ -1313,7 +1313,7 @@ interface P2PSendOptions {
 
 **Example:**
 ```javascript
-const result = await client.p2p.send({
+const result = await client.pp.send({
   destination: 'bob',
   payload: { message: 'Hello quantum world!' },
   useQKD: true,
@@ -1325,14 +1325,14 @@ console.log(`Message ID: ${result.atom_id}`);
 
 ---
 
-### `client.p2p.receive(nodeId, options)`
+### `client.pp.receive(nodeId, options)`
 
-Receive messages from P2P network.
+Receive messages from PP network.
 
 **Parameters:**
 - `nodeId` (string): Your node identifier
 - `options` (object): Receive options
-  - `limit?: number` - Number of messages (default: 10)
+  - `limit?: number` - Number of messages (default: 0)
   - `since?: number` - Timestamp to receive messages since
 
 **Returns:**
@@ -1353,9 +1353,9 @@ Receive messages from P2P network.
 
 ---
 
-### `client.p2p.getStatus(nodeId?)`
+### `client.pp.getStatus(nodeId?)`
 
-Get P2P network status.
+Get PP network status.
 
 **Parameters:**
 - `nodeId` (string, optional): Node identifier (if omitted, returns global status)
@@ -1375,7 +1375,7 @@ Get P2P network status.
 
 ---
 
-### `client.p2p.listPeers(nodeId)`
+### `client.pp.listPeers(nodeId)`
 
 List connected peers for a node.
 
@@ -1398,7 +1398,7 @@ List connected peers for a node.
 
 ---
 
-### `client.p2p.disconnect(connectionId)`
+### `client.pp.disconnect(connectionId)`
 
 Disconnect from a peer.
 
@@ -1416,7 +1416,7 @@ Disconnect from a peer.
 
 ---
 
-### `client.p2p.getConnectionMetrics(connectionId)`
+### `client.pp.getConnectionMetrics(connectionId)`
 
 Get connection performance metrics.
 
@@ -1432,16 +1432,16 @@ Get connection performance metrics.
   qkd_sessions: number;           // Number of QKD sessions
   messages_sent: number;
   messages_received: number;
-  error_rate: number;              // Error rate (0-1)
+  error_rate: number;              // Error rate (0-)
   uptime: number;                  // Connection uptime in seconds
 }
 ```
 
 ---
 
-### `client.p2p.joinSwarm(options)`
+### `client.pp.joinSwarm(options)`
 
-Join a P2P network swarm.
+Join a PP network swarm.
 
 **Parameters:**
 ```typescript
@@ -1467,9 +1467,9 @@ interface SwarmJoinOptions {
 
 ---
 
-### `client.p2p.leaveSwarm(nodeId, swarmId)`
+### `client.pp.leaveSwarm(nodeId, swarmId)`
 
-Leave a P2P network swarm.
+Leave a PP network swarm.
 
 **Parameters:**
 - `nodeId` (string): Your node identifier
@@ -1487,9 +1487,9 @@ Leave a P2P network swarm.
 
 ---
 
-### `client.p2p.getTopology(swarmId?)`
+### `client.pp.getTopology(swarmId?)`
 
-Get P2P network topology.
+Get PP network topology.
 
 **Parameters:**
 - `swarmId` (string, optional): Swarm identifier (if omitted, returns global topology)
@@ -1538,13 +1538,13 @@ class QuantumInternetError extends Error {
 
 | Code | Description | HTTP Status |
 |------|-------------|-------------|
-| `INVALID_API_KEY` | API key invalid or missing | 401 |
-| `RATE_LIMIT_EXCEEDED` | Too many requests | 429 |
-| `BACKEND_UNAVAILABLE` | Quantum backend offline | 503 |
-| `INVALID_PARAMETERS` | Invalid request parameters | 400 |
-| `HARDWARE_ACCESS_DENIED` | Real hardware not available for your plan | 403 |
-| `SESSION_NOT_FOUND` | Session identifier not found | 404 |
-| `OPERATION_FAILED` | Quantum operation failed | 500 |
+| `INVALID_API_KEY` | API key invalid or missing | 0 |
+| `RATE_LIMIT_EXCEEDED` | Too many requests | 9 |
+| `BACKEND_UNAVAILABLE` | Quantum backend offline | 0 |
+| `INVALID_PARAMETERS` | Invalid request parameters | 00 |
+| `HARDWARE_ACCESS_DENIED` | Real hardware not available for your plan | 0 |
+| `SESSION_NOT_FOUND` | Session identifier not found | 0 |
+| `OPERATION_FAILED` | Quantum operation failed | 00 |
 | `NETWORK_ERROR` | Network connection error | - |
 | `TIMEOUT` | Request timeout | - |
 
@@ -1579,8 +1579,8 @@ Rate limits are enforced per API key and vary by subscription tier.
 
 | Tier | Requests/Day | Requests/Hour | Requests/Minute |
 |------|--------------|---------------|----------------|
-| **Free** | 100 | 10 | 2 |
-| **Pro** | 10,000 | 1,000 | 100 |
+| **Free** | 00 | 0 |  |
+| **Pro** | 0,000 | ,000 | 00 |
 | **Enterprise** | Unlimited | Unlimited | Unlimited |
 
 ### Rate Limit Headers
@@ -1588,9 +1588,9 @@ Rate limits are enforced per API key and vary by subscription tier.
 All API responses include rate limit information in headers:
 
 ```
-X-RateLimit-Limit: 10000
-X-RateLimit-Remaining: 9950
-X-RateLimit-Reset: 1640000000
+X-RateLimit-Limit: 0000
+X-RateLimit-Remaining: 990
+X-RateLimit-Reset: 0000000
 ```
 
 ### Handling Rate Limits
@@ -1602,7 +1602,7 @@ try {
   if (error.message.includes('RATE_LIMIT_EXCEEDED')) {
     // Check rate limit headers from last response
     const resetTime = error.details?.resetTime;
-    const waitSeconds = Math.ceil((resetTime - Date.now()) / 1000);
+    const waitSeconds = Math.ceil((resetTime - Date.now()) / 000);
     console.log(`Rate limit exceeded. Retry after ${waitSeconds} seconds.`);
   }
 }
@@ -1625,8 +1625,8 @@ import {
   QuantumInternetClient,
   BellPairOptions,
   BellPairResult,
-  BB84Options,
-  BB84Result
+  BB8Options,
+  BB8Result
 } from '@quantum-internet/foundation';
 
 const client = new QuantumInternetClient({
@@ -1637,7 +1637,7 @@ async function createBellPair(): Promise<BellPairResult> {
   const options: BellPairOptions = {
     backend: 'ibm_brisbane',
     useRealHardware: true,
-    fidelity: 0.95
+    fidelity: 0.9
   };
   
   return await client.bridge.createBellPair(options);
@@ -1663,27 +1663,27 @@ const client = new QuantumInternetClient({
 
 async function quantumKeyDistribution() {
   try {
-    // 1. Check API status
+    // . Check API status
     const status = await client.status();
     console.log('API Status:', status);
 
-    // 2. List available backends
+    // . List available backends
     const backends = await client.bridge.listBackends();
     console.log('Available backends:', backends.backends);
 
-    // 3. Execute BB84 QKD
-    const bb84 = await client.protocols.bb84.execute({
-      nQubits: 100,
+    // . Execute BB8 QKD
+    const bb8 = await client.protocols.bb8.execute({
+      nQubits: 00,
       useRealHardware: true,
       backend: 'ibm_brisbane'
     });
 
-    console.log(`Secure Key Length: ${bb84.secure_key_length} bits`);
-    console.log(`Error Rate: ${bb84.error_rate}`);
-    console.log(`Session ID: ${bb84.session_id}`);
+    console.log(`Secure Key Length: ${bb8.secure_key_length} bits`);
+    console.log(`Error Rate: ${bb8.error_rate}`);
+    console.log(`Session ID: ${bb8.session_id}`);
 
-    // 4. Validate security
-    const validation = await client.protocols.bb84.validateSecurity(bb84.session_id);
+    // . Validate security
+    const validation = await client.protocols.bb8.validateSecurity(bb8.session_id);
     console.log(`Security Level: ${validation.security_level}`);
     console.log(`Secure: ${validation.secure}`);
 
@@ -1699,20 +1699,20 @@ quantumKeyDistribution();
 
 ```javascript
 async function quantumEncryption() {
-  // 1. Initialize Quantum Ratchet session
+  // . Initialize Quantum Ratchet session
   const session = await client.ratchet.initialize({
     peerId: 'alice',
-    qkdProtocol: 'bb84',
+    qkdProtocol: 'bb8',
     useRealHardware: true
   });
 
-  // 2. Encrypt message
+  // . Encrypt message
   const encrypted = await client.ratchet.encrypt(
     session.session_id,
     'Secret quantum message'
   );
 
-  // 3. Decrypt message
+  // . Decrypt message
   const decrypted = await client.ratchet.decrypt(
     session.session_id,
     encrypted.ciphertext
@@ -1721,7 +1721,7 @@ async function quantumEncryption() {
   console.log('Original:', 'Secret quantum message');
   console.log('Decrypted:', decrypted.message);
 
-  // 4. Rotate keys for forward security
+  // . Rotate keys for forward security
   await client.ratchet.rotateKeys(session.session_id);
 }
 ```
@@ -1736,12 +1736,12 @@ async function mintTokens() {
   });
 
   // Calculate energy savings (example)
-  const energySaved = 0.5; // kWh
-  const carbonReduced = 0.25; // kg COâ‚‚
+  const energySaved = 0.; // kWh
+  const carbonReduced = 0.; // kg CO‚‚
 
   // Mint SSC tokens
   const minted = await client.ssc.mint({
-    amount: 50,
+    amount: 0,
     energySaved,
     carbonReduced,
     operationType: 'quantum_entanglement'
@@ -1753,26 +1753,26 @@ async function mintTokens() {
   // Check balance
   const balance = await client.ssc.getBalance('your_address');
   console.log(`Total Balance: ${balance.ssc} SSC`);
-  console.log(`Carbon Credits: ${balance.carbon_credits} kg COâ‚‚`);
+  console.log(`Carbon Credits: ${balance.carbon_credits} kg CO‚‚`);
 }
 ```
 
-### Example: P2P Quantum Network
+### Example: PP Quantum Network
 
 ```javascript
-async function p2pNetwork() {
-  // 1. Connect to peer with QKD
-  const connection = await client.p2p.connect({
+async function ppNetwork() {
+  // . Connect to peer with QKD
+  const connection = await client.pp.connect({
     peerId: 'bob',
     enableQKD: true,
-    protocol: 'bb84',
+    protocol: 'bb8',
     useRealHardware: true
   });
 
   console.log(`Connected: ${connection.connection_id}`);
 
-  // 2. Send encrypted message
-  const sent = await client.p2p.send({
+  // . Send encrypted message
+  const sent = await client.pp.send({
     destination: 'bob',
     payload: { message: 'Hello quantum world!' },
     useQKD: true,
@@ -1781,8 +1781,8 @@ async function p2pNetwork() {
 
   console.log(`Message sent: ${sent.atom_id}`);
 
-  // 3. Get connection metrics
-  const metrics = await client.p2p.getConnectionMetrics(connection.connection_id);
+  // . Get connection metrics
+  const metrics = await client.pp.getConnectionMetrics(connection.connection_id);
   console.log(`Latency: ${metrics.latency}ms`);
   console.log(`QKD Sessions: ${metrics.qkd_sessions}`);
 }
@@ -1801,6 +1801,6 @@ async function p2pNetwork() {
 
 ---
 
-**Last Updated:** 2025-12-18  
-**API Version:** 1.0.0
+**Last Updated:** 0--8  
+**API Version:** .0.0
 

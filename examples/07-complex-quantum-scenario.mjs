@@ -3,11 +3,11 @@
  * Example 07: Complex Quantum-Secured Communication Scenario
  * 
  * This example demonstrates a complete quantum-secured communication setup:
- * 1. Quantum entanglement verification via Bell pairs and CHSH test
- * 2. Quantum Key Distribution (BB84) for secure key generation
- * 3. Quantum Ratchet encryption for end-to-end security
- * 4. P2P quantum network with QKD-enabled messaging
- * 5. SSC token minting for energy savings tracking
+ * . Quantum entanglement verification via Bell pairs and CHSH test
+ * . Quantum Key Distribution (BB8) for secure key generation
+ * . Quantum Ratchet encryption for end-to-end security
+ * . PP quantum network with QKD-enabled messaging
+ * . SSC token minting for energy savings tracking
  * 
  * This represents a real-world quantum internet use case where multiple
  * quantum technologies work together to provide secure communication.
@@ -24,25 +24,25 @@ import { QuantumInternetClient } from '../src/index.mjs';
 
 // Configuration
 const API_KEY = process.env.QUANTUM_INTERNET_API_KEY;
-const API_URL = process.env.QUANTUM_INTERNET_API_URL || 'https://quantum-internet-api.sparsesupernova.workers.dev/v1';
+const API_URL = process.env.QUANTUM_INTERNET_API_URL || 'https://quantum-internet-api.sparsesupernova.workers.dev/v';
 
 if (!API_KEY) {
-  console.error('❌ Error: QUANTUM_INTERNET_API_KEY environment variable not set');
+  console.error('Error: QUANTUM_INTERNET_API_KEY environment variable not set');
   console.error('   Get your API key: operations@sparse-supernova.com');
-  process.exit(1);
+  process.exit();
 }
 
-console.log('🔬 Complex Quantum Problem: Quantum-Secured Communication Setup\n');
+console.log('Complex Quantum Problem: Quantum-Secured Communication Setup\n');
 console.log('=' .repeat(70));
 console.log('Scenario: Establish end-to-end quantum-secured communication');
 console.log('Steps:');
-console.log('  1. Create Bell pairs for entanglement verification');
-console.log('  2. Perform CHSH test to verify quantum entanglement');
-console.log('  3. Execute BB84 QKD to generate secure keys');
-console.log('  4. Initialize Quantum Ratchet session with QKD');
-console.log('  5. Encrypt and decrypt messages using quantum keys');
-console.log('  6. Establish P2P quantum network connection');
-console.log('  7. Send quantum-secured messages via P2P network');
+console.log('  . Create Bell pairs for entanglement verification');
+console.log('  . Perform CHSH test to verify quantum entanglement');
+console.log('  . Execute BB8 QKD to generate secure keys');
+console.log('  . Initialize Quantum Ratchet session with QKD');
+console.log('  . Encrypt and decrypt messages using quantum keys');
+console.log('  . Establish PP quantum network connection');
+console.log('  7. Send quantum-secured messages via PP network');
 console.log('  8. Mint SSC tokens for energy savings');
 console.log('=' .repeat(70) + '\n');
 
@@ -61,119 +61,119 @@ async function runComplexQuantumScenario() {
   };
 
   try {
-    // Step 1: Verify API connectivity
-    console.log('📡 Step 1: Verifying API connectivity...');
+    // Step : Verify API connectivity
+    console.log('Step : Verifying API connectivity...');
     const status = await client.status();
-    console.log(`   ✅ API Status: ${status.status}`);
-    console.log(`   ✅ Version: ${status.version}`);
-    console.log(`   ✅ Backends Connected: ${status.backends_connected}`);
-    results.steps.push({ step: 1, name: 'API Connectivity', success: true });
+    console.log(`   API Status: ${status.status}`);
+    console.log(`   Version: ${status.version}`);
+    console.log(`   Backends Connected: ${status.backends_connected}`);
+    results.steps.push({ step: , name: 'API Connectivity', success: true });
 
-    // Step 2: List available quantum backends
-    console.log('\n🌉 Step 2: Listing available quantum backends...');
+    // Step : List available quantum backends
+    console.log('\nStep : Listing available quantum backends...');
     const backends = await client.bridge.listBackends();
-    console.log(`   ✅ Found ${backends.backends.length} backends:`);
+    console.log(`   Found ${backends.backends.length} backends:`);
     backends.backends.forEach(b => {
       console.log(`      - ${b.name}: ${b.qubits} qubits, ${b.status}`);
     });
     const selectedBackend = backends.backends[0]?.name || 'ibm_brisbane';
-    results.steps.push({ step: 2, name: 'Backend Discovery', success: true, backend: selectedBackend });
+    results.steps.push({ step: , name: 'Backend Discovery', success: true, backend: selectedBackend });
 
-    // Step 3: Create Bell pairs for entanglement
-    console.log('\n🔔 Step 3: Creating entangled Bell pairs...');
-    const bellPair1 = await client.bridge.createBellPair({
+    // Step : Create Bell pairs for entanglement
+    console.log('\nStep : Creating entangled Bell pairs...');
+    const bellPair = await client.bridge.createBellPair({
       backend: selectedBackend,
-      fidelity: 0.95,
-      shots: 2048
+      fidelity: 0.9,
+      shots: 08
     });
-    console.log(`   ✅ Bell Pair 1 Created:`);
-    console.log(`      - Fidelity: ${bellPair1.fidelity}`);
-    console.log(`      - Measurements: ${JSON.stringify(bellPair1.measurements)}`);
-    console.log(`      - Hardware: ${bellPair1.hardware ? 'Real' : 'Simulated'}`);
+    console.log(`   Bell Pair  Created:`);
+    console.log(`      - Fidelity: ${bellPair.fidelity}`);
+    console.log(`      - Measurements: ${JSON.stringify(bellPair.measurements)}`);
+    console.log(`      - Hardware: ${bellPair.hardware ? 'Real' : 'Simulated'}`);
 
-    const bellPair2 = await client.bridge.createBellPair({
+    const bellPair = await client.bridge.createBellPair({
       backend: selectedBackend,
       fidelity: 0.97,
-      shots: 2048
+      shots: 08
     });
-    console.log(`   ✅ Bell Pair 2 Created:`);
-    console.log(`      - Fidelity: ${bellPair2.fidelity}`);
+    console.log(`   Bell Pair  Created:`);
+    console.log(`      - Fidelity: ${bellPair.fidelity}`);
     results.steps.push({ 
-      step: 3, 
+      step: , 
       name: 'Bell Pair Creation', 
       success: true, 
-      fidelity1: bellPair1.fidelity,
-      fidelity2: bellPair2.fidelity
+      fidelity: bellPair.fidelity,
+      fidelity: bellPair.fidelity
     });
 
-    // Step 4: Perform CHSH test to verify quantum entanglement
-    console.log('\n📊 Step 4: Performing CHSH test (Bell inequality violation)...');
+    // Step : Perform CHSH test to verify quantum entanglement
+    console.log('\nStep : Performing CHSH test (Bell inequality violation)...');
     const chsh = await client.bridge.performCHSH({
-      measurements: 2000,
+      measurements: 000,
       backend: selectedBackend
     });
-    console.log(`   ✅ CHSH Test Results:`);
+    console.log(`   CHSH Test Results:`);
     console.log(`      - CHSH Value: ${chsh.chsh_value}`);
-    console.log(`      - Violates Classical: ${chsh.violates_classical ? 'YES ✅' : 'NO ❌'}`);
+    console.log(`      - Violates Classical: ${chsh.violates_classical ? 'YES' : 'NO'}`);
     console.log(`      - Correlations: E_ab=${chsh.correlations.E_ab}, E_ab'=${chsh.correlations.E_ab_prime}`);
-    if (chsh.chsh_value > 2.0) {
-      console.log(`      🎉 Quantum entanglement verified! (CHSH > 2.0)`);
+    if (chsh.chsh_value > .0) {
+      console.log(`      Quantum entanglement verified! (CHSH > .0)`);
     }
     results.steps.push({ 
-      step: 4, 
+      step: , 
       name: 'CHSH Test', 
       success: true, 
       chsh_value: chsh.chsh_value,
       quantum_verified: chsh.violates_classical
     });
 
-    // Step 5: Execute BB84 QKD protocol
-    console.log('\n🔐 Step 5: Executing BB84 Quantum Key Distribution...');
-    const bb84 = await client.protocols.bb84.execute({
-      nQubits: 200,
-      errorThreshold: 0.11,
+    // Step : Execute BB8 QKD protocol
+    console.log('\nStep : Executing BB8 Quantum Key Distribution...');
+    const bb8 = await client.protocols.bb8.execute({
+      nQubits: 00,
+      errorThreshold: 0.,
       backend: selectedBackend,
       privacyAmplification: true,
       errorCorrection: true
     });
-    console.log(`   ✅ BB84 QKD Results:`);
-    console.log(`      - Raw Key Length: ${bb84.raw_key_length} bits`);
-    console.log(`      - Secure Key Length: ${bb84.secure_key_length} bits`);
-    console.log(`      - Error Rate: ${(bb84.error_rate * 100).toFixed(2)}%`);
-    console.log(`      - Session ID: ${bb84.session_id}`);
-    const keyEfficiency = ((bb84.secure_key_length / bb84.raw_key_length) * 100).toFixed(1);
+    console.log(`   BB8 QKD Results:`);
+    console.log(`      - Raw Key Length: ${bb8.raw_key_length} bits`);
+    console.log(`      - Secure Key Length: ${bb8.secure_key_length} bits`);
+    console.log(`      - Error Rate: ${(bb8.error_rate * 00).toFixed()}%`);
+    console.log(`      - Session ID: ${bb8.session_id}`);
+    const keyEfficiency = ((bb8.secure_key_length / bb8.raw_key_length) * 00).toFixed();
     console.log(`      - Key Efficiency: ${keyEfficiency}%`);
     results.steps.push({ 
-      step: 5, 
-      name: 'BB84 QKD', 
+      step: , 
+      name: 'BB8 QKD', 
       success: true, 
-      secure_key_length: bb84.secure_key_length,
-      error_rate: bb84.error_rate
+      secure_key_length: bb8.secure_key_length,
+      error_rate: bb8.error_rate
     });
 
-    // Step 6: Validate BB84 security
-    console.log('\n🛡️ Step 6: Validating BB84 session security...');
-    const validation = await client.protocols.bb84.validateSecurity(bb84.session_id);
-    console.log(`   ✅ Security Validation:`);
-    console.log(`      - Secure: ${validation.secure ? 'YES ✅' : 'NO ❌'}`);
+    // Step : Validate BB8 security
+    console.log('\nStep : Validating BB8 session security...');
+    const validation = await client.protocols.bb8.validateSecurity(bb8.session_id);
+    console.log(`   Security Validation:`);
+    console.log(`      - Secure: ${validation.secure ? 'YES' : 'NO'}`);
     console.log(`      - Security Level: ${validation.security_level}`);
-    console.log(`      - Eavesdropper Detected: ${validation.eavesdropper_detected ? 'YES ⚠️' : 'NO ✅'}`);
+    console.log(`      - Eavesdropper Detected: ${validation.eavesdropper_detected ? 'YES' : 'NO'}`);
     results.steps.push({ 
-      step: 6, 
+      step: , 
       name: 'Security Validation', 
       success: validation.secure,
       security_level: validation.security_level
     });
 
     // Step 7: Initialize Quantum Ratchet session
-    console.log('\n🔒 Step 7: Initializing Quantum Ratchet encryption session...');
+    console.log('\nStep 7: Initializing Quantum Ratchet encryption session...');
     const ratchetSession = await client.ratchet.initialize({
       peerId: 'alice',
-      qkdProtocol: 'bb84',
+      qkdProtocol: 'bb8',
       backend: selectedBackend,
-      keyRefreshInterval: 50
+      keyRefreshInterval: 0
     });
-    console.log(`   ✅ Quantum Ratchet Session Created:`);
+    console.log(`   Quantum Ratchet Session Created:`);
     console.log(`      - Session ID: ${ratchetSession.session_id}`);
     console.log(`      - Peer ID: ${ratchetSession.peer_id}`);
     console.log(`      - Protocol: ${ratchetSession.protocol}`);
@@ -185,10 +185,10 @@ async function runComplexQuantumScenario() {
     });
 
     // Step 8: Encrypt messages using Quantum Ratchet
-    console.log('\n📝 Step 8: Encrypting messages with quantum keys...');
+    console.log('\nStep 8: Encrypting messages with quantum keys...');
     const messages = [
-      'Quantum-secured message #1',
-      'Sensitive data: 42',
+      'Quantum-secured message #',
+      'Sensitive data: ',
       'Top secret quantum information'
     ];
     const encryptedMessages = [];
@@ -196,9 +196,9 @@ async function runComplexQuantumScenario() {
     for (let i = 0; i < messages.length; i++) {
       const encrypted = await client.ratchet.encrypt(ratchetSession.session_id, messages[i]);
       encryptedMessages.push(encrypted);
-      console.log(`   ✅ Message ${i + 1} encrypted:`);
+      console.log(`   Message ${i + } encrypted:`);
       console.log(`      - Original: "${messages[i]}"`);
-      console.log(`      - Ciphertext: ${encrypted.ciphertext.substring(0, 50)}...`);
+      console.log(`      - Ciphertext: ${encrypted.ciphertext.substring(0, 0)}...`);
       console.log(`      - Key ID: ${encrypted.key_id}`);
     }
     results.steps.push({ 
@@ -209,19 +209,19 @@ async function runComplexQuantumScenario() {
     });
 
     // Step 9: Decrypt messages
-    console.log('\n🔓 Step 9: Decrypting messages...');
+    console.log('\nStep 9: Decrypting messages...');
     for (let i = 0; i < encryptedMessages.length; i++) {
       const decrypted = await client.ratchet.decrypt(
         ratchetSession.session_id, 
         encryptedMessages[i].ciphertext
       );
       const match = decrypted.message === messages[i];
-      console.log(`   ${match ? '✅' : '❌'} Message ${i + 1} decrypted:`);
+      console.log(`   ${match ? '[OK]' : '[FAIL]'} Message ${i + } decrypted:`);
       console.log(`      - Decrypted: "${decrypted.message}"`);
-      console.log(`      - Match: ${match ? 'YES ✅' : 'NO ❌'}`);
+      console.log(`      - Match: ${match ? 'YES' : 'NO'}`);
       if (!match) {
         results.success = false;
-        results.errors.push(`Message ${i + 1} decryption mismatch`);
+        results.errors.push(`Message ${i + } decryption mismatch`);
       }
     }
     results.steps.push({ 
@@ -230,106 +230,106 @@ async function runComplexQuantumScenario() {
       success: true
     });
 
-    // Step 10: Establish P2P quantum network connection
-    console.log('\n🌐 Step 10: Establishing P2P quantum network connection...');
-    const p2pConnection = await client.p2p.connect({
+    // Step 0: Establish PP quantum network connection
+    console.log('\nStep 0: Establishing PP quantum network connection...');
+    const ppConnection = await client.pp.connect({
       peerId: 'bob',
       enableQKD: true,
-      protocol: 'bb84',
+      protocol: 'bb8',
       backend: selectedBackend,
       encryption: true
     });
-    console.log(`   ✅ P2P Connection Established:`);
-    console.log(`      - Connection ID: ${p2pConnection.connection_id}`);
-    console.log(`      - Peer ID: ${p2pConnection.peer_id}`);
-    console.log(`      - QKD Enabled: ${p2pConnection.qkd_enabled ? 'YES ✅' : 'NO'}`);
-    console.log(`      - Encryption: ${p2pConnection.encryption_enabled ? 'Enabled ✅' : 'Disabled'}`);
+    console.log(`   PP Connection Established:`);
+    console.log(`      - Connection ID: ${ppConnection.connection_id}`);
+    console.log(`      - Peer ID: ${ppConnection.peer_id}`);
+    console.log(`      - QKD Enabled: ${ppConnection.qkd_enabled ? 'YES' : 'NO'}`);
+    console.log(`      - Encryption: ${ppConnection.encryption_enabled ? 'Enabled' : 'Disabled'}`);
     results.steps.push({ 
-      step: 10, 
-      name: 'P2P Connection', 
+      step: 0, 
+      name: 'PP Connection', 
       success: true, 
-      connection_id: p2pConnection.connection_id
+      connection_id: ppConnection.connection_id
     });
 
-    // Step 11: Send quantum-secured messages via P2P
-    console.log('\n📤 Step 11: Sending quantum-secured messages via P2P network...');
-    const p2pMessages = [
+    // Step : Send quantum-secured messages via PP
+    console.log('\nStep : Sending quantum-secured messages via PP network...');
+    const ppMessages = [
       { message: 'Hello from quantum network!', priority: 'normal' },
-      { message: 'Quantum data: [1,0,1,1,0,1]', priority: 'high' },
+      { message: 'Quantum data: [,0,,,0,]', priority: 'high' },
       { message: 'Final quantum state achieved', priority: 'normal' }
     ];
     
-    for (let i = 0; i < p2pMessages.length; i++) {
-      const sent = await client.p2p.send({
+    for (let i = 0; i < ppMessages.length; i++) {
+      const sent = await client.pp.send({
         destination: 'bob',
-        payload: p2pMessages[i],
+        payload: ppMessages[i],
         useQKD: true,
         encrypt: true,
-        priority: p2pMessages[i].priority
+        priority: ppMessages[i].priority
       });
-      console.log(`   ✅ Message ${i + 1} sent:`);
+      console.log(`   Message ${i + } sent:`);
       console.log(`      - Atom ID: ${sent.atom_id}`);
       console.log(`      - Status: ${sent.status}`);
-      console.log(`      - QKD Used: ${sent.qkd_used ? 'YES ✅' : 'NO'}`);
-      console.log(`      - Encrypted: ${sent.encrypted ? 'YES ✅' : 'NO'}`);
+      console.log(`      - QKD Used: ${sent.qkd_used ? 'YES' : 'NO'}`);
+      console.log(`      - Encrypted: ${sent.encrypted ? 'YES' : 'NO'}`);
     }
     results.steps.push({ 
-      step: 11, 
-      name: 'P2P Messaging', 
+      step: , 
+      name: 'PP Messaging', 
       success: true, 
-      messages_sent: p2pMessages.length
+      messages_sent: ppMessages.length
     });
 
-    // Step 12: Get connection metrics
-    console.log('\n📊 Step 12: Retrieving P2P connection metrics...');
-    const metrics = await client.p2p.getConnectionMetrics(p2pConnection.connection_id);
-    console.log(`   ✅ Connection Metrics:`);
+    // Step : Get connection metrics
+    console.log('\nStep : Retrieving PP connection metrics...');
+    const metrics = await client.pp.getConnectionMetrics(ppConnection.connection_id);
+    console.log(`   Connection Metrics:`);
     console.log(`      - Latency: ${metrics.latency}ms`);
     console.log(`      - Throughput: ${metrics.throughput} bytes/s`);
     console.log(`      - QKD Sessions: ${metrics.qkd_sessions}`);
     console.log(`      - Messages Sent: ${metrics.messages_sent}`);
-    console.log(`      - Error Rate: ${(metrics.error_rate * 100).toFixed(2)}%`);
+    console.log(`      - Error Rate: ${(metrics.error_rate * 00).toFixed()}%`);
     results.steps.push({ 
-      step: 12, 
+      step: , 
       name: 'Connection Metrics', 
       success: true, 
       latency: metrics.latency,
       qkd_sessions: metrics.qkd_sessions
     });
 
-    // Step 13: Mint SSC tokens for energy savings
-    console.log('\n💰 Step 13: Minting SSC tokens for quantum operations...');
-    const energySaved = 2.5; // kWh
-    const carbonReduced = 1.25; // kg CO₂
+    // Step : Mint SSC tokens for energy savings
+    console.log('\nStep : Minting SSC tokens for quantum operations...');
+    const energySaved = .; // kWh
+    const carbonReduced = .; // kg CO��
     const sscMint = await client.ssc.mint({
-      amount: 250,
+      amount: 0,
       energySaved: energySaved,
       carbonReduced: carbonReduced,
       operationType: 'quantum_entanglement'
     });
-    console.log(`   ✅ SSC Tokens Minted:`);
+    console.log(`   SSC Tokens Minted:`);
     console.log(`      - Tokens: ${sscMint.tokens} SSC`);
     console.log(`      - Transaction ID: ${sscMint.tx_id}`);
     console.log(`      - Energy Saved: ${energySaved} kWh`);
-    console.log(`      - Carbon Reduced: ${carbonReduced} kg CO₂`);
+    console.log(`      - Carbon Reduced: ${carbonReduced} kg CO��`);
     results.steps.push({ 
-      step: 13, 
+      step: , 
       name: 'SSC Token Minting', 
       success: true, 
       tokens: sscMint.tokens,
       energy_saved: energySaved
     });
 
-    // Step 14: Check SSC balance
-    console.log('\n💳 Step 14: Checking SSC balance...');
+    // Step : Check SSC balance
+    console.log('\nStep : Checking SSC balance...');
     const address = 'alice-wallet-address';
     const balance = await client.ssc.getBalance(address);
-    console.log(`   ✅ Balance for ${address}:`);
+    console.log(`   Balance for ${address}:`);
     console.log(`      - SSC Tokens: ${balance.ssc}`);
-    console.log(`      - Carbon Credits: ${balance.carbon_credits} kg CO₂`);
+    console.log(`      - Carbon Credits: ${balance.carbon_credits} kg CO��`);
     console.log(`      - Energy Saved: ${balance.energy_saved} kWh`);
     results.steps.push({ 
-      step: 14, 
+      step: , 
       name: 'Balance Check', 
       success: true, 
       balance: balance.ssc
@@ -337,30 +337,30 @@ async function runComplexQuantumScenario() {
 
     // Summary
     console.log('\n' + '=' .repeat(70));
-    console.log('📋 Scenario Summary');
+    console.log('Scenario Summary');
     console.log('=' .repeat(70));
-    console.log(`✅ Total Steps: ${results.steps.length}`);
-    console.log(`✅ Successful: ${results.steps.filter(s => s.success).length}`);
-    console.log(`❌ Failed: ${results.steps.filter(s => !s.success).length}`);
-    console.log(`\n🎯 Overall Result: ${results.success ? 'SUCCESS ✅' : 'PARTIAL SUCCESS ⚠️'}`);
+    console.log(`Total Steps: ${results.steps.length}`);
+    console.log(`Successful: ${results.steps.filter(s => s.success).length}`);
+    console.log(`Failed: ${results.steps.filter(s => !s.success).length}`);
+    console.log(`\nOverall Result: ${results.success ? 'SUCCESS' : 'PARTIAL SUCCESS'}`);
     
     if (results.errors.length > 0) {
-      console.log(`\n❌ Errors:`);
+      console.log(`\nErrors:`);
       results.errors.forEach(err => console.log(`   - ${err}`));
     }
 
-    console.log('\n🔬 Quantum Problem Solved:');
-    console.log('   ✅ Quantum entanglement verified (CHSH > 2.0)');
-    console.log('   ✅ Secure quantum keys generated (BB84 QKD)');
-    console.log('   ✅ End-to-end quantum encryption established');
-    console.log('   ✅ Quantum-secured P2P network operational');
-    console.log('   ✅ Energy savings tracked and tokenized');
+    console.log('\nQuantum Problem Solved:');
+    console.log('   - Quantum entanglement verified (CHSH > .0)');
+    console.log('   - Secure quantum keys generated (BB8 QKD)');
+    console.log('   - End-to-end quantum encryption established');
+    console.log('   - Quantum-secured PP network operational');
+    console.log('   - Energy savings tracked and tokenized');
     console.log('\n' + '=' .repeat(70));
 
     return results;
 
   } catch (error) {
-    console.error('\n❌ Fatal Error:', error.message);
+    console.error('\nFatal Error:', error.message);
     if (error.stack) {
       console.error(error.stack);
     }
@@ -373,10 +373,10 @@ async function runComplexQuantumScenario() {
 // Run the scenario
 runComplexQuantumScenario()
   .then(results => {
-    process.exit(results.success ? 0 : 1);
+    process.exit(results.success ? 0 : );
   })
   .catch(error => {
     console.error('Fatal error:', error);
-    process.exit(1);
+    process.exit();
   });
 

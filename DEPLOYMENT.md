@@ -1,62 +1,62 @@
 # Quantum Internet Foundation API - Deployment Guide
 
-## ✅ Deployment Status
+##  Deployment Status
 
-**API Status:** ✅ **DEPLOYED AND WORKING**
+**API Status:**  **DEPLOYED AND WORKING**
 
 - **Worker URL:** `https://quantum-internet-api.sparsesupernova.workers.dev`
-- **API Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v1`
+- **API Base URL:** `https://quantum-internet-api.sparsesupernova.workers.dev/v`
 - **Deployment Platform:** Cloudflare Workers
-- **Test Results:** 8/8 tests passing (100%)
+- **Test Results:** 8/8 tests passing (00%)
 
 ---
 
-## 🚀 Deployment Information
+##  Deployment Information
 
 ### Cloudflare Worker
 
 - **Worker Name:** `quantum-internet-api`
-- **Worker ID:** `f9e7dfe2-27c5-43bc-bf8d-78930855291b`
-- **Deployed:** 2025-12-18
+- **Worker ID:** `f9e7dfe-7c-bc-bf8d-789089b`
+- **Deployed:** 0--8
 - **Status:** Active and operational
 
 ### API Endpoints
 
 All endpoints from `docs/BACKEND_API.md` are implemented and working:
 
-✅ **General Endpoints**
-- `GET /v1/ping` - Health check
-- `GET /v1/status` - API status
+ **General Endpoints**
+- `GET /v/ping` - Health check
+- `GET /v/status` - API status
 
-✅ **Quantum Bridge Endpoints**
-- `POST /v1/quantum/bridge/bell-pair` - Create Bell pair
-- `POST /v1/quantum/bridge/chsh` - CHSH test
-- `GET /v1/quantum/bridge/backends` - List backends
-- `GET /v1/quantum/bridge/backends/{name}` - Backend info
-- `GET /v1/quantum/bridge/status` - Bridge status
+ **Quantum Bridge Endpoints**
+- `POST /v/quantum/bridge/bell-pair` - Create Bell pair
+- `POST /v/quantum/bridge/chsh` - CHSH test
+- `GET /v/quantum/bridge/backends` - List backends
+- `GET /v/quantum/bridge/backends/{name}` - Backend info
+- `GET /v/quantum/bridge/status` - Bridge status
 
-✅ **QKD Protocol Endpoints**
-- `POST /v1/quantum/protocols/bb84` - BB84 QKD
-- `POST /v1/quantum/protocols/e91` - E91 QKD
-- `POST /v1/quantum/protocols/sarg04` - SARG04 QKD
-- `POST /v1/quantum/protocols/bbm92` - BBM92 QKD
+ **QKD Protocol Endpoints**
+- `POST /v/quantum/protocols/bb8` - BB8 QKD
+- `POST /v/quantum/protocols/e9` - E9 QKD
+- `POST /v/quantum/protocols/sarg0` - SARG0 QKD
+- `POST /v/quantum/protocols/bbm9` - BBM9 QKD
 
-✅ **Quantum Ratchet Endpoints**
-- `POST /v1/quantum/ratchet/init` - Initialize session
-- `POST /v1/quantum/ratchet/encrypt` - Encrypt message
-- `POST /v1/quantum/ratchet/decrypt` - Decrypt message
+ **Quantum Ratchet Endpoints**
+- `POST /v/quantum/ratchet/init` - Initialize session
+- `POST /v/quantum/ratchet/encrypt` - Encrypt message
+- `POST /v/quantum/ratchet/decrypt` - Decrypt message
 
-✅ **SSC Economics Endpoints**
-- `POST /v1/quantum/ssc/mint` - Mint tokens
-- `GET /v1/quantum/ssc/balance/{address}` - Get balance
+ **SSC Economics Endpoints**
+- `POST /v/quantum/ssc/mint` - Mint tokens
+- `GET /v/quantum/ssc/balance/{address}` - Get balance
 
-✅ **P2P Network Endpoints**
-- `POST /v1/quantum/p2p/connect` - Connect to peer
-- `POST /v1/quantum/p2p/send` - Send message
+ **PP Network Endpoints**
+- `POST /v/quantum/pp/connect` - Connect to peer
+- `POST /v/quantum/pp/send` - Send message
 
 ---
 
-## 🔧 Configuration
+##  Configuration
 
 ### Client Library
 
@@ -67,7 +67,7 @@ import { QuantumInternetClient } from '@quantum-internet/foundation';
 
 const client = new QuantumInternetClient({
   apiKey: 'your-api-key'
-  // baseUrl defaults to: https://quantum-internet-api.sparsesupernova.workers.dev/v1
+  // baseUrl defaults to: https://quantum-internet-api.sparsesupernova.workers.dev/v
 });
 ```
 
@@ -75,25 +75,25 @@ const client = new QuantumInternetClient({
 
 To use a custom domain (e.g., `api.sparse-supernova.com`):
 
-1. **Add Custom Domain in Cloudflare:**
+. **Add Custom Domain in Cloudflare:**
    ```bash
    npx wrangler routes add api.sparse-supernova.com --worker quantum-internet-api
    ```
 
-2. **Update DNS:**
-   - Add CNAME record: `api.sparse-supernova.com` → `quantum-internet-api.sparsesupernova.workers.dev`
+. **Update DNS:**
+   - Add CNAME record: `api.sparse-supernova.com` � `quantum-internet-api.sparsesupernova.workers.dev`
 
-3. **Update Client Base URL:**
+. **Update Client Base URL:**
    ```javascript
    const client = new QuantumInternetClient({
      apiKey: 'your-api-key',
-     baseUrl: 'https://api.sparse-supernova.com/v1'
+     baseUrl: 'https://api.sparse-supernova.com/v'
    });
    ```
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ### Test Suite
 
@@ -105,34 +105,34 @@ node test-api.mjs
 ```
 
 **Current Test Results:**
-- ✅ 8/8 tests passing (100%)
-- ✅ All endpoints responding correctly
-- ✅ Error handling working
-- ✅ CORS configured properly
+-  8/8 tests passing (00%)
+-  All endpoints responding correctly
+-  Error handling working
+-  CORS configured properly
 
 ### Manual Testing
 
 **Test Ping:**
 ```bash
-curl https://quantum-internet-api.sparsesupernova.workers.dev/v1/ping
+curl https://quantum-internet-api.sparsesupernova.workers.dev/v/ping
 ```
 
 **Test Bell Pair:**
 ```bash
-curl -X POST https://quantum-internet-api.sparsesupernova.workers.dev/v1/quantum/bridge/bell-pair \
+curl -X POST https://quantum-internet-api.sparsesupernova.workers.dev/v/quantum/bridge/bell-pair \
   -H "Content-Type: application/json" \
   -H "X-API-Key: test-key" \
-  -d '{"backend":"ibm_brisbane","fidelity_target":0.95,"shots":1024}'
+  -d '{"backend":"ibm_brisbane","fidelity_target":0.9,"shots":0}'
 ```
 
 **Test Status:**
 ```bash
-curl https://quantum-internet-api.sparsesupernova.workers.dev/v1/status
+curl https://quantum-internet-api.sparsesupernova.workers.dev/v/status
 ```
 
 ---
 
-## 📝 Deployment Commands
+##  Deployment Commands
 
 ### Deploy Worker
 
@@ -157,7 +157,7 @@ npx wrangler tail quantum-internet-api
 
 ---
 
-## 🔒 Security
+##  Security
 
 ### API Key Authentication
 
@@ -180,7 +180,7 @@ CORS is enabled for all origins. In production, you may want to restrict this:
 
 ---
 
-## 📊 Monitoring
+##  Monitoring
 
 ### Cloudflare Dashboard
 
@@ -194,46 +194,46 @@ Monitor the API health:
 
 ```bash
 # Health check endpoint
-curl https://quantum-internet-api.sparsesupernova.workers.dev/v1/ping
+curl https://quantum-internet-api.sparsesupernova.workers.dev/v/ping
 
 # Status endpoint
-curl https://quantum-internet-api.sparsesupernova.workers.dev/v1/status
+curl https://quantum-internet-api.sparsesupernova.workers.dev/v/status
 ```
 
 ---
 
-## 🚀 Next Steps
+##  Next Steps
 
 ### Production Enhancements
 
-1. **API Key Management**
+. **API Key Management**
    - Implement proper API key validation against database
    - Add rate limiting per API key
    - Track usage and billing
 
-2. **Real Quantum Backend Integration**
+. **Real Quantum Backend Integration**
    - Connect to actual IBM Quantum hardware
    - Implement real QKD protocols
    - Add quantum circuit execution
 
-3. **Custom Domain**
+. **Custom Domain**
    - Set up `api.sparse-supernova.com` or your preferred domain
    - Configure SSL/TLS certificates
    - Update DNS records
 
-4. **Enhanced Security**
+. **Enhanced Security**
    - Restrict CORS to specific origins
    - Add request signing
    - Implement rate limiting
 
-5. **Monitoring & Logging**
+. **Monitoring & Logging**
    - Set up error tracking
    - Add performance monitoring
    - Configure alerts
 
 ---
 
-## 📚 Documentation
+##  Documentation
 
 - **API Reference:** [docs/API_REFERENCE.md](./docs/API_REFERENCE.md)
 - **Backend API Spec:** [docs/BACKEND_API.md](./docs/BACKEND_API.md)
@@ -241,14 +241,14 @@ curl https://quantum-internet-api.sparsesupernova.workers.dev/v1/status
 
 ---
 
-## ✅ Deployment Checklist
+##  Deployment Checklist
 
 - [x] Cloudflare Worker created
 - [x] All API endpoints implemented
 - [x] CORS configured
 - [x] Error handling implemented
 - [x] Client library updated with new base URL
-- [x] Test suite passing (100%)
+- [x] Test suite passing (00%)
 - [x] Documentation updated
 - [ ] Custom domain configured (optional)
 - [ ] API key validation system (optional)
@@ -256,6 +256,6 @@ curl https://quantum-internet-api.sparsesupernova.workers.dev/v1/status
 
 ---
 
-**Last Updated:** 2025-12-18  
-**Deployment Status:** ✅ Operational
+**Last Updated:** 0--8  
+**Deployment Status:**  Operational
 

@@ -7,7 +7,7 @@ import { QuantumInternetClient } from './src/index.mjs';
 const API_BASE_URL = 'https://quantum-internet-api.sparsesupernova.workers.dev/v1';
 const TEST_API_KEY = process.env.QUANTUM_INTERNET_API_KEY || 'test-key';
 
-console.log('🧪 Quantum Internet Foundation API Test Suite\n');
+console.log('Quantum Internet Foundation API Test Suite\n');
 console.log('=' .repeat(60));
 console.log(`Base URL: ${API_BASE_URL}`);
 console.log(`API Key: ${TEST_API_KEY.substring(0, 10)}...`);
@@ -25,10 +25,10 @@ function test(name, fn) {
     try {
       process.stdout.write(`Testing: ${name}... `);
       await fn();
-      console.log('✅ PASSED');
+      console.log('[PASSED]');
       results.passed++;
     } catch (error) {
-      console.log(`❌ FAILED: ${error.message}`);
+      console.log(`[FAILED]: ${error.message}`);
       results.failed++;
       results.errors.push({ test: name, error: error.message });
     }
@@ -169,14 +169,14 @@ async function runTests() {
   })();
 
   console.log('\n' + '=' .repeat(60));
-  console.log('📊 Test Results Summary');
+  console.log('Test Results Summary');
   console.log('=' .repeat(60));
-  console.log(`✅ Passed: ${results.passed}`);
-  console.log(`❌ Failed: ${results.failed}`);
+  console.log(`Passed: ${results.passed}`);
+  console.log(`Failed: ${results.failed}`);
   console.log(`📈 Success Rate: ${((results.passed / (results.passed + results.failed)) * 100).toFixed(1)}%`);
   
   if (results.errors.length > 0) {
-    console.log('\n❌ Errors:');
+    console.log('\nErrors:');
     results.errors.forEach(({ test, error }) => {
       console.log(`  - ${test}: ${error}`);
     });
@@ -184,7 +184,7 @@ async function runTests() {
 
   // Check if API is deployed
   console.log('\n' + '=' .repeat(60));
-  console.log('🌐 API Deployment Status');
+  console.log('API Deployment Status');
   console.log('=' .repeat(60));
   
   try {
@@ -193,10 +193,10 @@ async function runTests() {
       headers: { 'Content-Type': 'application/json' },
       signal: AbortSignal.timeout(5000)
     });
-    console.log(`✅ API is reachable at ${API_BASE_URL}`);
+    console.log(`API is reachable at ${API_BASE_URL}`);
     console.log(`   Status: ${testResponse.status} ${testResponse.statusText}`);
   } catch (error) {
-    console.log(`❌ API is NOT reachable at ${API_BASE_URL}`);
+    console.log(`API is NOT reachable at ${API_BASE_URL}`);
     console.log(`   Error: ${error.message}`);
     console.log('\n💡 Next Steps:');
     console.log('   1. Backend API is deployed at quantum-internet-api.sparsesupernova.workers.dev');

@@ -55,7 +55,7 @@ async function main() {
                  args[args.indexOf('--api-key') + 1];
   
   if (!apiKey) {
-    console.error('❌ Error: No API key provided');
+    console.error('Error: No API key provided');
     console.error('Set QUANTUM_INTERNET_API_KEY or use --api-key <key>');
     console.error('Get your API key: operations@sparse-supernova.com');
     process.exit(1);
@@ -66,7 +66,7 @@ async function main() {
   try {
     switch (command) {
       case 'status': {
-        console.log('🔍 Checking API status...\n');
+        console.log('Checking API status...\n');
         const status = await client.status();
         console.log('API Status:', status.status);
         console.log('Version:', status.version);
@@ -75,7 +75,7 @@ async function main() {
       }
       
       case 'bridge-list': {
-        console.log('🌉 Listing quantum backends...\n');
+        console.log('Listing quantum backends...\n');
         const backends = await client.bridge.listBackends();
         console.log('Available backends:');
         backends.backends.forEach(b => {
@@ -87,7 +87,7 @@ async function main() {
       case 'bell-pair': {
         const backend = args[args.indexOf('--backend') + 1] || 'ibm_brisbane';
         const useReal = args.includes('--real-hardware');
-        console.log('🔔 Creating Bell pair...\n');
+        console.log('Creating Bell pair...\n');
         const result = await client.bridge.createBellPair({
           backend,
           useRealHardware: useReal
@@ -101,13 +101,13 @@ async function main() {
       case 'qkd': {
         const protocol = args[1];
         if (!['bb84', 'e91', 'sarg04', 'bbm92'].includes(protocol)) {
-          console.error('❌ Invalid protocol. Use: bb84, e91, sarg04, or bbm92');
+          console.error('Invalid protocol. Use: bb84, e91, sarg04, or bbm92');
           process.exit(1);
         }
         const nQubits = parseInt(args[args.indexOf('--qubits') + 1] || '100');
         const useReal = args.includes('--real-hardware');
         
-        console.log(`🔐 Executing ${protocol.toUpperCase()} protocol...\n`);
+        console.log(`Executing ${protocol.toUpperCase()} protocol...\n`);
         let result;
         if (protocol === 'bb84') {
           result = await client.protocols.bb84.execute({ nQubits, useRealHardware: useReal });
@@ -127,10 +127,10 @@ async function main() {
       case 'balance': {
         const address = args[1];
         if (!address) {
-          console.error('❌ Error: Address required');
+          console.error('Error: Address required');
           process.exit(1);
         }
-        console.log('💰 Checking SSC balance...\n');
+        console.log('Checking SSC balance...\n');
         const balance = await client.ssc.getBalance(address);
         console.log('Balance:', balance.ssc, 'SSC');
         console.log('Carbon credits:', balance.carbon_credits, 'kg CO₂');
@@ -139,12 +139,12 @@ async function main() {
       }
       
       default:
-        console.error(`❌ Unknown command: ${command}`);
+        console.error(`Unknown command: ${command}`);
         console.error('Run "qi --help" for usage information');
         process.exit(1);
     }
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error('Error:', error.message);
     process.exit(1);
   }
 }

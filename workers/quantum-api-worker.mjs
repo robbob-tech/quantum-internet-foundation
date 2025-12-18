@@ -65,7 +65,7 @@ function simulateBellPair(backend, fidelityTarget, shots) {
 }
 
 function simulateCHSH(nMeasurements) {
-  // Perfect quantum CHSH value is 2âˆš2 â‰ˆ 2.828
+  // Perfect quantum CHSH value is 2ˆ2 ˆ 2.828
   const chshValue = 2.828 + (Math.random() * 0.1 - 0.05);
   
   return {
