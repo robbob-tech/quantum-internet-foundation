@@ -19,13 +19,15 @@
   "scripts": {
     "test": "node tests/test-basic.mjs",
     "test:all": "node tests/test-all.mjs",
+    "test:free-tier": "node tests/test-free-tier.mjs",
     "example:bridge": "node examples/01-quantum-bridge.mjs",
     "example:protocols": "node examples/02-all-protocols.mjs",
     "example:ratchet": "node examples/03-quantum-ratchet.mjs",
     "example:ssc": "node examples/04-ssc-economics.mjs",
     "example:full": "node examples/05-full-stack.mjs",
     "example:local": "node examples/06-local-simulation.mjs",
-    "example:complex": "node examples/07-complex-quantum-scenario.mjs"
+    "example:complex": "node examples/07-complex-quantum-scenario.mjs",
+    "example:free-tier": "node examples/08-free-tier-demo.mjs"
   },
   "keywords": [
     "quantum",

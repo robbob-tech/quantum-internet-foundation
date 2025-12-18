@@ -1,4 +1,4 @@
-// examples/0-quantum-bridge.mjs
+// examples/01-quantum-bridge.mjs
 // Example: Using Quantum Bridge with real IBM Quantum hardware
 
 import { QuantumInternetClient } from '../src/index.mjs';
@@ -20,15 +20,15 @@ async function quantumBridgeDemo() {
   }
   
   try {
-    // . Check bridge status
-    console.log('.  Checking quantum bridge status...');
+    // 1. Check bridge status
+    console.log('1.  Checking quantum bridge status...');
     const status = await client.bridge.status();
     console.log('   [OK] Bridge status:', status.status);
     console.log('    Connected backends:', status.backends_connected);
     console.log('     Uptime:', status.uptime, '\n');
     
-    // . List available backends
-    console.log('.  Listing available quantum backends...');
+    // 2. List available backends
+    console.log('2.  Listing available quantum backends...');
     const backends = await client.bridge.listBackends();
     console.log('   Available backends:');
     backends.backends.forEach(b => {
@@ -36,21 +36,21 @@ async function quantumBridgeDemo() {
     });
     console.log();
     
-    // . Create Bell pair (simulation mode)
-    console.log('.  Creating Bell pair (simulation mode)...');
+    // 3. Create Bell pair (simulation mode)
+    console.log('3.  Creating Bell pair (simulation mode)...');
     const bellPairSim = await client.bridge.createBellPair({
       backend: 'ibm_brisbane',
       useRealHardware: false,
-      fidelity: 0.9
+      fidelity: 0.95
     });
     console.log('   [OK] Fidelity:', bellPairSim.fidelity);
     console.log('    Measurements:', bellPairSim.measurements);
     console.log('     Hardware:', bellPairSim.hardware ? 'Real' : 'Simulated');
     console.log();
     
-    // . Create Bell pair (real hardware - if available)
+    // 4. Create Bell pair (real hardware - if available)
     if (status.real_hardware_available) {
-      console.log('.  Creating Bell pair (REAL IBM Quantum hardware)...');
+      console.log('4.  Creating Bell pair (REAL IBM Quantum hardware)...');
       const bellPairReal = await client.bridge.createBellPair({
         backend: 'ibm_brisbane',
         useRealHardware: true,
@@ -63,21 +63,21 @@ async function quantumBridgeDemo() {
       console.log();
     }
     
-    // . Perform CHSH test
-    console.log('.  Performing CHSH test (Bell inequality)...');
+    // 5. Perform CHSH test
+    console.log('5.  Performing CHSH test (Bell inequality)...');
     const chsh = await client.bridge.performCHSH({
-      measurements: 000,
+      measurements: 1000,
       backend: 'ibm_brisbane',
       useRealHardware: false
     });
     console.log('    CHSH value:', chsh.chsh_value);
-    console.log('    Classical limit:', .0);
+    console.log('    Classical limit:', 2.0);
     console.log('    Violates classical:', chsh.violates_classical ? 'YES' : 'NO');
     console.log('    Correlations:', chsh.correlations);
     console.log();
     
-    // . Get backend details
-    console.log('.  Getting backend information...');
+    // 6. Get backend details
+    console.log('6.  Getting backend information...');
     const backendInfo = await client.bridge.getBackendInfo('ibm_brisbane');
     console.log('   Backend:', backendInfo.name);
     console.log('   Qubits:', backendInfo.qubits);

@@ -33,11 +33,194 @@ function errorResponse(message, code, status = 400) {
   }, status);
 }
 
-// Helper function to validate API key
+// API Key Tier System
+// In production, this would query a database. For now, we use a simple mapping.
+const API_KEY_TIERS = {
+  // Free tier keys (prefix: free_)
+  'free_': {
+    name: 'Free',
+    requestsPerDay: 100,
+    requestsPerHour: 10,
+    requestsPerMinute: 2,
+    allowRealHardware: false,
+    allowAllProtocols: true
+  },
+  // Pro tier keys (prefix: pro_)
+  'pro_': {
+    name: 'Pro',
+    requestsPerDay: 10000,
+    requestsPerHour: 1000,
+    requestsPerMinute: 100,
+    allowRealHardware: true,
+    allowAllProtocols: true
+  },
+  // Enterprise tier keys (prefix: ent_)
+  'ent_': {
+    name: 'Enterprise',
+    requestsPerDay: Infinity,
+    requestsPerHour: Infinity,
+    requestsPerMinute: Infinity,
+    allowRealHardware: true,
+    allowAllProtocols: true
+  }
+};
+
+// Rate limiting storage (in production, use Cloudflare KV or Durable Objects)
+// Format: { apiKey: { day: { count, resetTime }, hour: { count, resetTime }, minute: { count, resetTime } } }
+const rateLimitStore = {};
+
+// Helper function to get API key tier
+function getApiKeyTier(apiKey) {
+  if (!apiKey) return null;
+  
+  // Check key prefix to determine tier
+  if (apiKey.startsWith('free_')) {
+    return API_KEY_TIERS['free_'];
+  } else if (apiKey.startsWith('pro_')) {
+    return API_KEY_TIERS['pro_'];
+  } else if (apiKey.startsWith('ent_')) {
+    return API_KEY_TIERS['ent_'];
+  }
+  
+  // Default to Free tier for unknown keys
+  return API_KEY_TIERS['free_'];
+}
+
+// Helper function to check rate limits
+function checkRateLimit(apiKey, tier) {
+  if (!tier) return { allowed: false, reason: 'Invalid API key' };
+  
+  const now = Date.now();
+  const dayMs = 24 * 60 * 60 * 1000;
+  const hourMs = 60 * 60 * 1000;
+  const minuteMs = 60 * 1000;
+  
+  // Initialize rate limit tracking for this key
+  if (!rateLimitStore[apiKey]) {
+    rateLimitStore[apiKey] = {
+      day: { count: 0, resetTime: now + dayMs },
+      hour: { count: 0, resetTime: now + hourMs },
+      minute: { count: 0, resetTime: now + minuteMs }
+    };
+  }
+  
+  const limits = rateLimitStore[apiKey];
+  
+  // Reset counters if time windows have passed
+  if (now >= limits.day.resetTime) {
+    limits.day = { count: 0, resetTime: now + dayMs };
+  }
+  if (now >= limits.hour.resetTime) {
+    limits.hour = { count: 0, resetTime: now + hourMs };
+  }
+  if (now >= limits.minute.resetTime) {
+    limits.minute = { count: 0, resetTime: now + minuteMs };
+  }
+  
+  // Check limits
+  if (tier.requestsPerDay !== Infinity && limits.day.count >= tier.requestsPerDay) {
+    return {
+      allowed: false,
+      reason: 'Daily rate limit exceeded',
+      limit: tier.requestsPerDay,
+      resetTime: limits.day.resetTime
+    };
+  }
+  
+  if (tier.requestsPerHour !== Infinity && limits.hour.count >= tier.requestsPerHour) {
+    return {
+      allowed: false,
+      reason: 'Hourly rate limit exceeded',
+      limit: tier.requestsPerHour,
+      resetTime: limits.hour.resetTime
+    };
+  }
+  
+  if (tier.requestsPerMinute !== Infinity && limits.minute.count >= tier.requestsPerMinute) {
+    return {
+      allowed: false,
+      reason: 'Rate limit exceeded',
+      limit: tier.requestsPerMinute,
+      resetTime: limits.minute.resetTime
+    };
+  }
+  
+  // Increment counters
+  limits.day.count++;
+  limits.hour.count++;
+  limits.minute.count++;
+  
+  return { allowed: true, remaining: tier.requestsPerDay - limits.day.count };
+}
+
+// Helper function to validate API key and check tier
 function validateApiKey(request) {
   const apiKey = request.headers.get('X-API-Key');
-  // For now, accept any API key. In production, validate against database
-  return apiKey && apiKey.length > 0;
+  if (!apiKey || apiKey.length === 0) {
+    return { valid: false, error: 'Missing API key' };
+  }
+  
+  const tier = getApiKeyTier(apiKey);
+  if (!tier) {
+    return { valid: false, error: 'Invalid API key format' };
+  }
+  
+  return { valid: true, tier, apiKey };
+}
+
+// Middleware function to validate API key, check rate limits, and enforce tier restrictions
+async function validateRequest(request, requireAuth = true) {
+  if (!requireAuth) {
+    return { valid: true, tier: null, apiKey: null, rateLimit: null };
+  }
+  
+  const keyValidation = validateApiKey(request);
+  if (!keyValidation.valid) {
+    return {
+      valid: false,
+      error: errorResponse(keyValidation.error || 'Invalid or missing API key', 'INVALID_API_KEY', 401)
+    };
+  }
+  
+  // Check rate limit
+  const rateLimit = checkRateLimit(keyValidation.apiKey, keyValidation.tier);
+  if (!rateLimit.allowed) {
+    return {
+      valid: false,
+      error: errorResponse(
+        `Rate limit exceeded: ${rateLimit.reason}. Limit: ${rateLimit.limit} requests. Reset at: ${new Date(rateLimit.resetTime).toISOString()}`,
+        'RATE_LIMIT_EXCEEDED',
+        429
+      )
+    };
+  }
+  
+  return {
+    valid: true,
+    tier: keyValidation.tier,
+    apiKey: keyValidation.apiKey,
+    rateLimit: rateLimit,
+    headers: {
+      'X-RateLimit-Limit': keyValidation.tier.requestsPerDay.toString(),
+      'X-RateLimit-Remaining': rateLimit.remaining?.toString() || '0',
+      'X-RateLimit-Reset': rateLimit.resetTime?.toString() || '',
+      'X-API-Tier': keyValidation.tier.name
+    }
+  };
+}
+
+// Helper function to check if real hardware is allowed
+function canUseRealHardware(tier, requestBody) {
+  if (!tier) return false;
+  if (tier.allowRealHardware) return true;
+  
+  // Free tier: force simulation mode
+  const useReal = requestBody?.use_real_hardware || requestBody?.useRealHardware;
+  if (useReal && !tier.allowRealHardware) {
+    return false;
+  }
+  
+  return true;
 }
 
 // Simulate quantum operations (replace with real quantum backend calls)
@@ -65,7 +248,7 @@ function simulateBellPair(backend, fidelityTarget, shots) {
 }
 
 function simulateCHSH(nMeasurements) {
-  // Perfect quantum CHSH value is 2ˆ2 ˆ 2.828
+  // Perfect quantum CHSH value is 2âˆš2 â‰ˆ 2.828
   const chshValue = 2.828 + (Math.random() * 0.1 - 0.05);
   
   return {
@@ -130,8 +313,9 @@ async function handleStatus() {
 }
 
 async function handleBellPair(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -139,20 +323,32 @@ async function handleBellPair(request) {
     const backend = body.backend || 'ibm_brisbane';
     const fidelityTarget = body.fidelity_target || 0.95;
     const shots = body.shots || 1024;
-    const useRealHardware = body.use_real_hardware || false;
+    const requestedRealHardware = body.use_real_hardware || false;
+    
+    // Check if tier allows real hardware
+    const useRealHardware = canUseRealHardware(validation.tier, body) && requestedRealHardware;
+    
+    if (requestedRealHardware && !useRealHardware) {
+      return errorResponse(
+        'Real hardware access requires Pro or Enterprise tier. Upgrade at operations@sparse-supernova.com',
+        'HARDWARE_ACCESS_DENIED',
+        403
+      );
+    }
     
     const result = simulateBellPair(backend, fidelityTarget, shots);
     result.hardware = useRealHardware;
     
-    return jsonResponse(result);
+    return jsonResponse(result, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleCHSH(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -163,7 +359,7 @@ async function handleCHSH(request) {
     const result = simulateCHSH(nMeasurements);
     result.backend = backend;
     
-    return jsonResponse(result);
+    return jsonResponse(result, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
@@ -220,27 +416,42 @@ async function handleBridgeStatus() {
 }
 
 async function handleBB84(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
     const body = await request.json();
     const nQubits = body.n_qubits || 100;
     const errorThreshold = body.error_rate_threshold || 0.11;
+    const requestedRealHardware = body.use_real_hardware || false;
+    
+    // Check if tier allows real hardware
+    const useRealHardware = canUseRealHardware(validation.tier, body) && requestedRealHardware;
+    
+    if (requestedRealHardware && !useRealHardware) {
+      return errorResponse(
+        'Real hardware access requires Pro or Enterprise tier. Upgrade at operations@sparse-supernova.com',
+        'HARDWARE_ACCESS_DENIED',
+        403
+      );
+    }
     
     const result = simulateQKD('bb84', nQubits, errorThreshold);
     result.backend = body.backend || 'ibm_brisbane';
+    result.hardware = useRealHardware;
     
-    return jsonResponse(result);
+    return jsonResponse(result, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleE91(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -250,15 +461,16 @@ async function handleE91(request) {
     
     const result = simulateE91(nPairs, chshThreshold);
     
-    return jsonResponse(result);
+    return jsonResponse(result, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleSARG04(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -268,15 +480,16 @@ async function handleSARG04(request) {
     const result = simulateQKD('sarg04', nQubits, 0.11);
     result.backend = body.backend || 'ibm_brisbane';
     
-    return jsonResponse(result);
+    return jsonResponse(result, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleBBM92(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -286,15 +499,16 @@ async function handleBBM92(request) {
     const result = simulateE91(nPairs, 2.0);
     result.session_id = `bbm92-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     
-    return jsonResponse(result);
+    return jsonResponse(result, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleRatchetInit(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -305,15 +519,16 @@ async function handleRatchetInit(request) {
       peer_id: body.peer_id,
       protocol: body.qkd_protocol || 'bb84',
       created_at: getTimestamp()
-    });
+    }, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleRatchetEncrypt(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -324,15 +539,16 @@ async function handleRatchetEncrypt(request) {
       key_id: `key-${Date.now()}`,
       message_id: `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       timestamp: getTimestamp()
-    });
+    }, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleRatchetDecrypt(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -344,15 +560,16 @@ async function handleRatchetDecrypt(request) {
       key_id: `key-${Date.now()}`,
       message_id: `msg-${Date.now()}`,
       timestamp: getTimestamp()
-    });
+    }, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleSSCMint(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -364,7 +581,7 @@ async function handleSSCMint(request) {
       timestamp: getTimestamp(),
       carbon_credits: body.carbon_reduced || 0,
       energy_saved: body.energy_saved || 0
-    });
+    }, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
@@ -384,8 +601,9 @@ async function handleSSCBalance(url) {
 }
 
 async function handleP2PConnect(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -399,15 +617,16 @@ async function handleP2PConnect(request) {
       protocol: body.protocol || 'bb84',
       encryption_enabled: body.encryption !== false,
       timestamp: getTimestamp()
-    });
+    }, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }
 }
 
 async function handleP2PSend(request) {
-  if (!validateApiKey(request)) {
-    return errorResponse('Invalid or missing API key', 'INVALID_API_KEY', 401);
+  const validation = await validateRequest(request);
+  if (!validation.valid) {
+    return validation.error;
   }
   
   try {
@@ -420,7 +639,7 @@ async function handleP2PSend(request) {
       encrypted: body.encrypt !== false,
       qkd_used: body.use_qkd || false,
       timestamp: getTimestamp()
-    });
+    }, 200, validation.headers);
   } catch (error) {
     return errorResponse('Invalid request body', 'INVALID_PARAMETERS', 400);
   }

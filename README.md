@@ -1,11 +1,11 @@
 # Quantum Internet Foundation
 
 [![npm version](https://img.shields.io/npm/v/@quantum-internet/foundation.svg)](https://www.npmjs.com/package/@quantum-internet/foundation)
-[![License](https://img.shields.io/badge/License-Apache%0.0-blue.svg)](https://opensource.org/licenses/Apache-.0)
-[![Node](https://img.shields.io/badge/node-%E%D0.0.0-brightgreen.svg)](https://nodejs.org)
-![QI Repo-Sat Audit](https://img.shields.io/badge/QI%0Repo--Sat-Passed-skyblue?style=flat-square)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Node](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org)
+![QI Repo-Sat Audit](https://img.shields.io/badge/QI%20Repo--Sat-Passed-skyblue?style=flat-square)
 
-> _QI repo-saturation audit passed  no proprietary quantum bridge, hardware drivers, or production protocols detected._
+> _QI repo-saturation audit passed — no proprietary quantum bridge, hardware drivers, or production protocols detected._
 
 **Professional quantum networking client library with full access to production quantum infrastructure.**
 
@@ -17,10 +17,10 @@ This client library provides access to **ALL** our quantum networking features:
 
 - **Quantum Bridge** - Real IBM Quantum hardware integration
 - **Q-HAL** - Hardware abstraction layer with multi-vendor support  
-- **QKD Protocols** - BB8, E9 (fixed CHSH), SARG0, BBM9
+- **QKD Protocols** - BB84, E91 (fixed CHSH), SARG04, BBM92
 - **Quantum Ratchet** - QKD-enhanced end-to-end encryption
 - **SSC Economics** - Token minting and carbon credit system
-- **PP Network** - Quantum-secured mesh networking
+- **P2P Network** - Quantum-secured mesh networking
 
 All features are delivered via our production API - you get full functionality without exposing proprietary code.
 
@@ -40,7 +40,7 @@ This repository contains **only the client library** for accessing our quantum i
 - Quantum bridge implementation (`quantum-bridge-server.py`)
 - Q-HAL device drivers and hardware abstraction logic
 - Protocol optimization algorithms and improvements
-- SARG0/BBM9 protocol implementations
+- SARG04/BBM92 protocol implementations
 - Quantum Ratchet encryption engine
 - SSC economics smart contracts and token minting logic
 - Real IBM Quantum hardware integration code
@@ -63,8 +63,15 @@ npm install @quantum-internet/foundation
 ```
 
 **Requirements:**
-- Node.js >= 0.0.0
+- Node.js >= 20.0.0
 - API key from operations@sparse-supernova.com
+
+**API Access Tiers:**
+- **Free Tier**: 100 requests/day, simulation mode only, all protocols available
+- **Pro Tier**: 10,000 requests/day, real hardware access, $99/month
+- **Enterprise Tier**: Unlimited requests, custom pricing
+
+See [API Tiers Documentation](docs/API_TIERS.md) for complete details.
 
 ---
 
@@ -82,7 +89,7 @@ const client = new QuantumInternetClient({
 const bellPair = await client.bridge.createBellPair({
   backend: 'ibm_brisbane',
   useRealHardware: true,
-  fidelity: 0.9
+  fidelity: 0.95
 });
 
 console.log('Fidelity:', bellPair.fidelity);
@@ -93,7 +100,7 @@ console.log('Hardware:', bellPair.hardware); // true = real quantum hardware
 
 ## Features
 
-### . Quantum Bridge (Real Hardware Integration)
+### 1. Quantum Bridge (Real Hardware Integration)
 
 Connect to real IBM Quantum computers via our production quantum bridge:
 
@@ -106,16 +113,16 @@ const bellPair = await client.bridge.createBellPair({
 
 // Perform CHSH test (Bell inequality)
 const chsh = await client.bridge.performCHSH({
-  measurements: 000,
+  measurements: 1000,
   backend: 'ibm_brisbane'
 });
-console.log('CHSH value:', chsh.chsh_value); // > .0 violates classical
+console.log('CHSH value:', chsh.chsh_value); // > 2.0 violates classical
 
 // List available quantum backends
 const backends = await client.bridge.listBackends();
 ```
 
-### . Q-HAL (Hardware Abstraction Layer)
+### 2. Q-HAL (Hardware Abstraction Layer)
 
 Unified interface for multi-vendor quantum devices:
 
@@ -123,7 +130,7 @@ Unified interface for multi-vendor quantum devices:
 // Register quantum device
 await client.qhal.registerDevice({
   type: 'photonic',
-  id: 'photonic-lab-0',
+  id: 'photonic-lab-01',
   capabilities: ['bell_pair', 'qkd', 'entanglement_swapping']
 });
 
@@ -134,53 +141,53 @@ const devices = await client.qhal.listDevices();
 const result = await client.qhal.executeOperation(
   'ibm_brisbane',
   'create_bell_pair',
-  { fidelity_target: 0.9 }
+  { fidelity_target: 0.95 }
 );
 ```
 
-### . Quantum Key Distribution (All Protocols)
+### 3. Quantum Key Distribution (All Protocols)
 
-#### BB8 (Optimized Implementation)
+#### BB84 (Optimized Implementation)
 
 ```javascript
-const bb8 = await client.protocols.bb8.execute({
-  nQubits: 00,
+const bb84 = await client.protocols.bb84.execute({
+  nQubits: 100,
   useRealHardware: true,
   backend: 'ibm_brisbane'
 });
-console.log('Secure key:', bb8.secure_key_length, 'bits');
+console.log('Secure key:', bb84.secure_key_length, 'bits');
 ```
 
-#### E9 (Fixed CHSH Calculation)
+#### E91 (Fixed CHSH Calculation)
 
 ```javascript
-const e9 = await client.protocols.e9.execute({
-  nPairs: 00,
+const e91 = await client.protocols.e91.execute({
+  nPairs: 100,
   useRealHardware: true
 });
-console.log('CHSH:', e9.chsh_value); // Correctly ~.88 for perfect Bell states
-console.log('Key:', e9.secure_key_length, 'bits');
+console.log('CHSH:', e91.chsh_value); // Correctly ~2.828 for perfect Bell states
+console.log('Key:', e91.secure_key_length, 'bits');
 ```
 
-#### SARG0 (PNS Attack Resistant)
+#### SARG04 (PNS Attack Resistant)
 
 ```javascript
-const sarg0 = await client.protocols.sarg0.execute({
-  nQubits: 00,
+const sarg04 = await client.protocols.sarg04.execute({
+  nQubits: 100,
   useRealHardware: false
 });
 ```
 
-#### BBM9 (Entanglement-Based)
+#### BBM92 (Entanglement-Based)
 
 ```javascript
-const bbm9 = await client.protocols.bbm9.execute({
-  nPairs: 00,
+const bbm92 = await client.protocols.bbm92.execute({
+  nPairs: 100,
   useRealHardware: false
 });
 ```
 
-### . Quantum Ratchet (EE Encryption)
+### 4. Quantum Ratchet (E2E Encryption)
 
 QKD-enhanced forward-secure encryption:
 
@@ -188,7 +195,7 @@ QKD-enhanced forward-secure encryption:
 // Initialize encrypted session
 const session = await client.ratchet.initialize({
   peerId: 'alice',
-  qkdProtocol: 'bb8',
+  qkdProtocol: 'bb84',
   useRealHardware: true
 });
 
@@ -208,47 +215,47 @@ const decrypted = await client.ratchet.decrypt(
 await client.ratchet.rotateKeys(session.session_id);
 ```
 
-### . SSC Economics (Carbon Credits)
+### 5. SSC Economics (Carbon Credits)
 
 Token minting based on energy savings and carbon offsets:
 
 ```javascript
 // Mint SSC tokens
 const minted = await client.ssc.mint({
-  amount: 00,
-  energySaved: .,  // kWh
-  carbonReduced: 0.7,  // kg CO��
+  amount: 100,
+  energySaved: 1.5,  // kWh
+  carbonReduced: 0.75,  // kg CO₂
   operationType: 'quantum_entanglement'
 });
 
 // Check balance
 const balance = await client.ssc.getBalance(address);
 console.log('Balance:', balance.ssc, 'SSC');
-console.log('Carbon credits:', balance.carbon_credits, 'kg CO��');
+console.log('Carbon credits:', balance.carbon_credits, 'kg CO₂');
 
 // Transfer tokens
 await client.ssc.transfer({
   from: addressA,
   to: addressB,
-  amount: 0
+  amount: 50
 });
 ```
 
-### . PP Quantum Network
+### 6. P2P Quantum Network
 
 Decentralized quantum-secured mesh networking:
 
 ```javascript
 // Connect to peer with QKD
-const connection = await client.pp.connect({
+const connection = await client.p2p.connect({
   peerId: 'bob',
   enableQKD: true,
-  protocol: 'bb8',
+  protocol: 'bb84',
   useRealHardware: true
 });
 
 // Send encrypted message
-await client.pp.send({
+await client.p2p.send({
   destination: 'bob',
   payload: { message: 'Hello quantum world!' },
   useQKD: true,
@@ -256,7 +263,7 @@ await client.pp.send({
 });
 
 // Check connection metrics
-const metrics = await client.pp.getConnectionMetrics(connection.connection_id);
+const metrics = await client.p2p.getConnectionMetrics(connection.connection_id);
 console.log('Latency:', metrics.latency, 'ms');
 console.log('QKD sessions:', metrics.qkd_sessions);
 ```
@@ -267,13 +274,14 @@ console.log('QKD sessions:', metrics.qkd_sessions);
 
 See the `examples/` directory for complete working examples:
 
-- `0-quantum-bridge.mjs` - Quantum bridge and real IBM Quantum hardware
-- `0-all-protocols.mjs` - All QKD protocols (BB8, E9, SARG0, BBM9)
-- `0-quantum-ratchet.mjs` - End-to-end encryption with key rotation
-- `0-ssc-economics.mjs` - Token minting and carbon credit system
-- `0-full-stack.mjs` - Complete integration of all features
-- `0-local-simulation.mjs` - Educational simulations (no API needed)
-- `07-complex-quantum-scenario.mjs` - **Complex quantum-secured communication scenario** (-step workflow)
+- `01-quantum-bridge.mjs` - Quantum bridge and real IBM Quantum hardware
+- `02-all-protocols.mjs` - All QKD protocols (BB84, E91, SARG04, BBM92)
+- `03-quantum-ratchet.mjs` - End-to-end encryption with key rotation
+- `04-ssc-economics.mjs` - Token minting and carbon credit system
+- `05-full-stack.mjs` - Complete integration of all features
+- `06-local-simulation.mjs` - Educational simulations (no API needed)
+- `07-complex-quantum-scenario.mjs` - **Complex quantum-secured communication scenario** (14-step workflow)
+- `08-free-tier-demo.mjs` - **Free Tier demonstration** (shows rate limits, simulation mode, hardware restrictions)
 
 ### Running Examples
 
@@ -288,6 +296,7 @@ npm run example:ratchet
 npm run example:ssc
 npm run example:full
 npm run example:complex
+npm run example:free-tier
 
 # Local simulation (no API key needed)
 npm run example:local
@@ -298,13 +307,13 @@ npm run example:local
 ## API Access
 
 ### Free Tier
-- 00 requests/day
+- 100 requests/day
 - Simulation mode only
 - All protocols available
 - Educational use
 
 ### Pro Tier ($99/month)
-- 0,000 requests/day
+- 10,000 requests/day
 - **Real quantum hardware access**
 - All features
 - Email support
@@ -313,7 +322,7 @@ npm run example:local
 - Unlimited requests
 - Dedicated hardware access
 - Custom integration
-- /7 support
+- 24/7 support
 - SLA guarantees
 
 **Get your API key:** operations@sparse-supernova.com
@@ -335,16 +344,16 @@ npm run example:local
 
 ```
 @quantum-internet/foundation
- src/
-�    client/
-�   �    QuantumInternetClient.mjs  # Main client
-�   �    hardware/                   # Bridge & Q-HAL clients
-�   �    protocols/                  # QKD protocol clients
-�   �    security/                   # Quantum Ratchet client
-�   �    economics/                  # SSC client
-�   �    network/                    # PP client
-�    types/                          # TypeScript definitions
- examples/                           # Working examples
+├── src/
+│   ├── client/
+│   │   ├── QuantumInternetClient.mjs  # Main client
+│   │   ├── hardware/                   # Bridge & Q-HAL clients
+│   │   ├── protocols/                  # QKD protocol clients
+│   │   ├── security/                   # Quantum Ratchet client
+│   │   ├── economics/                  # SSC client
+│   │   └── network/                    # P2P client
+│   └── types/                          # TypeScript definitions
+└── examples/                           # Working examples
 ```
 
 ### Backend Infrastructure (Private)
@@ -352,13 +361,13 @@ npm run example:local
 All quantum operations run on our production backend:
 
 ```
-quantum-internet-api.sparsesupernova.workers.dev/v/
- /quantum/bridge/          # Quantum bridge endpoints
- /quantum/qhal/            # Q-HAL endpoints
- /quantum/protocols/       # QKD protocol endpoints
- /quantum/ratchet/         # Quantum Ratchet endpoints
- /quantum/ssc/             # SSC economics endpoints
- /quantum/pp/             # PP network endpoints
+quantum-internet-api.sparsesupernova.workers.dev/v1/
+├── /quantum/bridge/          # Quantum bridge endpoints
+├── /quantum/qhal/            # Q-HAL endpoints
+├── /quantum/protocols/       # QKD protocol endpoints
+├── /quantum/ratchet/         # Quantum Ratchet endpoints
+├── /quantum/ssc/             # SSC economics endpoints
+└── /quantum/p2p/             # P2P network endpoints
 ```
 
 ---
@@ -385,7 +394,7 @@ We welcome contributions to the client library! Please see [CONTRIBUTING.md](./C
 
 ## License
 
-Apache .0 - See [LICENSE](./LICENSE) for details.
+Apache 2.0 - See [LICENSE](./LICENSE) for details.
 
 ---
 
@@ -400,9 +409,24 @@ Apache .0 - See [LICENSE](./LICENSE) for details.
 
 ---
 
+## Testing
+
+Run the test suite:
+
+```bash
+# Basic tests
+npm test
+
+# All tests
+npm run test:all
+
+# Free Tier smoke test (verifies tier restrictions and rate limits)
+npm run test:free-tier
+```
+
 ## Educational Use
 
-This package includes basic local simulations for educational purposes (see `examples/0-local-simulation.mjs`). These are simplified implementations for learning quantum networking concepts.
+This package includes basic local simulations for educational purposes (see `examples/06-local-simulation.mjs`). These are simplified implementations for learning quantum networking concepts.
 
 For production use cases, research, or real quantum hardware access, use the API which provides access to our optimized implementations.
 
@@ -423,7 +447,7 @@ For production use cases, research, or real quantum hardware access, use the API
 - Quantum Ratchet security
 - SSC economics engine
 - Scalable infrastructure
-- /7 monitoring
+- 24/7 monitoring
 - SLA guarantees (Enterprise)
 
 ---
