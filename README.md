@@ -320,10 +320,10 @@ npm run example:local
 
 ## 📖 Documentation
 
-- [API Reference](./docs/API_REFERENCE.md)
-- [TypeScript Types](./src/types/index.d.ts)
-- [Examples Directory](./examples/)
-- [Backend API Specification](./docs/BACKEND_API.md)
+- **[Complete API Reference](./docs/API_REFERENCE.md)** - Comprehensive API documentation with all methods, parameters, and examples
+- [Backend API Specification](./docs/BACKEND_API.md) - Backend endpoint specification for implementation
+- [TypeScript Types](./src/types/index.d.ts) - Full TypeScript type definitions
+- [Examples Directory](./examples/) - Working code examples for all features
 
 ---
 
