@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Internet Foundation - Client Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .content {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0.5rem;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .link {
+            color: #667eea;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .link:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌌 Quantum Internet Foundation</h1>
+            <div class="badges">
+                <span class="badge">📦 npm: @quantum-internet/foundation</span>
+                <span class="badge">✅ QI Repo-Sat Audit Passed</span>
+                <span class="badge">🔒 IP Protected</span>
+                <span class="badge">⚡ Production Ready</span>
+            </div>
+            <p style="font-size: 1.2rem; margin-top: 1rem; color: #666;">
+                Professional quantum networking client library with full access to production quantum infrastructure.
+            </p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>🚀 Quick Start</h2>
+                <div class="code-block">
+                    <code>npm install @quantum-internet/foundation</code>
+                </div>
+                <div class="code-block">
+                    <code>import { QuantumInternetClient } from '@quantum-internet/foundation';
+
+const client = new QuantumInternetClient({
+  apiKey: process.env.QUANTUM_INTERNET_API_KEY
+});
+
+// Create Bell pair on real IBM Quantum hardware
+const bellPair = await client.bridge.createBellPair({
+  backend: 'ibm_brisbane',
+  useRealHardware: true
+});</code>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>✨ Features</h2>
+                <div class="features">
+                    <div class="feature">
+                        <h3>🔗 Quantum Bridge</h3>
+                        <p>Real IBM Quantum hardware integration with Bell pair generation and CHSH testing.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>⚙️ Q-HAL</h3>
+                        <p>Hardware abstraction layer with multi-vendor quantum device support.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🔐 QKD Protocols</h3>
+                        <p>BB84, E91 (fixed CHSH), SARG04, and BBM92 quantum key distribution.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🔒 Quantum Ratchet</h3>
+                        <p>QKD-enhanced end-to-end encryption with forward security.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>💰 SSC Economics</h3>
+                        <p>Token minting and carbon credit system for energy savings.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🌐 P2P Network</h3>
+                        <p>Quantum-secured mesh networking with decentralized architecture.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔒 Security / IP Notice</h2>
+                <p>This repository contains <strong>only the client library</strong> for accessing our quantum internet infrastructure.</p>
+                <p><strong>What's NOT included (delivered via production API):</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Quantum bridge implementation</li>
+                    <li>Q-HAL device drivers</li>
+                    <li>Protocol optimization algorithms</li>
+                    <li>Quantum Ratchet encryption engine</li>
+                    <li>SSC economics smart contracts</li>
+                    <li>Real IBM Quantum hardware integration code</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>All proprietary algorithms run on our secure backend infrastructure.</strong></p>
+            </div>
+
+            <div class="section">
+                <h2>📚 Documentation</h2>
+                <div class="links">
+                    <a href="https://github.com/robbob-tech/quantum-internet-foundation" class="link" target="_blank">📖 GitHub Repository</a>
+                    <a href="https://github.com/robbob-tech/quantum-internet-foundation/blob/main/README.md" class="link" target="_blank">📝 Full README</a>
+                    <a href="https://github.com/robbob-tech/quantum-internet-foundation/tree/main/examples" class="link" target="_blank">💡 Examples</a>
+                    <a href="https://github.com/robbob-tech/quantum-internet-foundation/blob/main/docs/BACKEND_API.md" class="link" target="_blank">🔌 API Docs</a>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💰 API Access Tiers</h2>
+                <div class="features">
+                    <div class="feature">
+                        <h3>Free Tier</h3>
+                        <p>100 requests/day, simulation mode, educational use</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Pro Tier ($99/month)</h3>
+                        <p>10,000 requests/day, real quantum hardware access</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Enterprise</h3>
+                        <p>Unlimited requests, dedicated hardware, 24/7 support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
