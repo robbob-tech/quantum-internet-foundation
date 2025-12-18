@@ -447,6 +447,26 @@ export default {
 
     // Route handling
     try {
+      // Root endpoint
+      if (path === '/v1' || path === '/v1/') {
+        return jsonResponse({
+          name: 'Quantum Internet Foundation API',
+          version: '1.0.0',
+          status: 'operational',
+          base_url: url.origin + '/v1',
+          endpoints: {
+            general: ['/v1/ping', '/v1/status'],
+            bridge: ['/v1/quantum/bridge/bell-pair', '/v1/quantum/bridge/chsh', '/v1/quantum/bridge/backends'],
+            protocols: ['/v1/quantum/protocols/bb84', '/v1/quantum/protocols/e91', '/v1/quantum/protocols/sarg04', '/v1/quantum/protocols/bbm92'],
+            ratchet: ['/v1/quantum/ratchet/init', '/v1/quantum/ratchet/encrypt', '/v1/quantum/ratchet/decrypt'],
+            ssc: ['/v1/quantum/ssc/mint', '/v1/quantum/ssc/balance/{address}'],
+            p2p: ['/v1/quantum/p2p/connect', '/v1/quantum/p2p/send']
+          },
+          documentation: 'https://github.com/sparse-supernova/quantum-internet-foundation',
+          timestamp: getTimestamp()
+        });
+      }
+      
       // General endpoints
       if (path === '/v1/ping' && method === 'GET') {
         return await handlePing();
