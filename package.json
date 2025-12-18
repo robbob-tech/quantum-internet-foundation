@@ -1,0 +1,66 @@
+{
+  "name": "@quantum-internet/foundation",
+  "version": "1.0.0",
+  "description": "Professional quantum networking client library with full access to production quantum infrastructure",
+  "type": "module",
+  "main": "src/index.mjs",
+  "types": "src/types/index.d.ts",
+  "bin": {
+    "qi": "bin/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./protocols": "./src/client/protocols/index.mjs",
+    "./hardware": "./src/client/hardware/index.mjs",
+    "./security": "./src/client/security/index.mjs",
+    "./economics": "./src/client/economics/index.mjs",
+    "./network": "./src/client/network/index.mjs"
+  },
+  "scripts": {
+    "test": "node tests/test-basic.mjs",
+    "test:all": "node tests/test-all.mjs",
+    "example:bridge": "node examples/01-quantum-bridge.mjs",
+    "example:protocols": "node examples/02-all-protocols.mjs",
+    "example:ratchet": "node examples/03-quantum-ratchet.mjs",
+    "example:ssc": "node examples/04-ssc-economics.mjs",
+    "example:full": "node examples/05-full-stack.mjs",
+    "example:local": "node examples/06-local-simulation.mjs"
+  },
+  "keywords": [
+    "quantum",
+    "quantum-internet",
+    "quantum-computing",
+    "qkd",
+    "quantum-key-distribution",
+    "bb84",
+    "e91",
+    "sarg04",
+    "bbm92",
+    "quantum-bridge",
+    "q-hal",
+    "quantum-ratchet",
+    "quantum-encryption",
+    "ibm-quantum",
+    "quantum-networking",
+    "quantum-communication",
+    "ssc",
+    "carbon-credits",
+    "p2p",
+    "mesh-network"
+  ],
+  "author": "Quantum Internet Foundation",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robbob-tech/quantum-internet-foundation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/robbob-tech/quantum-internet-foundation/issues"
+  },
+  "homepage": "https://quantuminternet.dev",
+  "dependencies": {},
+  "devDependencies": {}
+}
