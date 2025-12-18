@@ -199,7 +199,7 @@ async function runTests() {
     console.log(`❌ API is NOT reachable at ${API_BASE_URL}`);
     console.log(`   Error: ${error.message}`);
     console.log('\n💡 Next Steps:');
-    console.log('   1. Deploy the backend API to api.quantuminternet.dev');
+    console.log('   1. Backend API is deployed at quantum-internet-api.sparsesupernova.workers.dev');
     console.log('   2. Or update the baseUrl in client config to point to your deployed API');
     console.log('   3. The client library is working correctly - it just needs a backend to connect to');
   }

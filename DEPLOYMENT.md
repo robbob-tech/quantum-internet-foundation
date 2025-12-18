@@ -73,21 +73,21 @@ const client = new QuantumInternetClient({
 
 ### Custom Domain Setup
 
-To use a custom domain (e.g., `api.quantuminternet.dev`):
+To use a custom domain (e.g., `api.sparse-supernova.com`):
 
 1. **Add Custom Domain in Cloudflare:**
    ```bash
-   npx wrangler routes add api.quantuminternet.dev --worker quantum-internet-api
+   npx wrangler routes add api.sparse-supernova.com --worker quantum-internet-api
    ```
 
 2. **Update DNS:**
-   - Add CNAME record: `api.quantuminternet.dev` → `quantum-internet-api.sparsesupernova.workers.dev`
+   - Add CNAME record: `api.sparse-supernova.com` → `quantum-internet-api.sparsesupernova.workers.dev`
 
 3. **Update Client Base URL:**
    ```javascript
    const client = new QuantumInternetClient({
      apiKey: 'your-api-key',
-     baseUrl: 'https://api.quantuminternet.dev/v1'
+     baseUrl: 'https://api.sparse-supernova.com/v1'
    });
    ```
 
@@ -217,7 +217,7 @@ curl https://quantum-internet-api.sparsesupernova.workers.dev/v1/status
    - Add quantum circuit execution
 
 3. **Custom Domain**
-   - Set up `api.quantuminternet.dev` or your preferred domain
+   - Set up `api.sparse-supernova.com` or your preferred domain
    - Configure SSL/TLS certificates
    - Update DNS records
 

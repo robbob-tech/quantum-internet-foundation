@@ -350,7 +350,7 @@ npm run example:local
 All quantum operations run on our production backend:
 
 ```
-api.quantuminternet.dev/v1/
+quantum-internet-api.sparsesupernova.workers.dev/v1/
 ├── /quantum/bridge/          # Quantum bridge endpoints
 ├── /quantum/qhal/            # Q-HAL endpoints
 ├── /quantum/protocols/       # QKD protocol endpoints
@@ -390,7 +390,7 @@ Apache 2.0 - See [LICENSE](./LICENSE) for details.
 ## 🔗 Links
 
 - **Website:** https://sparse-supernova.com
-- **API Documentation:** https://quantuminternet.dev/docs
+- **API Documentation:** https://sparse-supernova.com/docs
 - **Get API Key:** operations@sparse-supernova.com
 - **GitHub:** https://github.com/sparse-supernova
 - **npm:** https://www.npmjs.com/package/@quantum-internet/foundation
@@ -429,7 +429,7 @@ For production use cases, research, or real quantum hardware access, use the API
 ## 💬 Support
 
 - **Email:** operations@sparse-supernova.com
-- **Documentation:** https://quantuminternet.dev/docs
+- **Documentation:** https://sparse-supernova.com/docs
 
 ---
 
